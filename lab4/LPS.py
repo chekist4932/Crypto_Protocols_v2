@@ -55,10 +55,8 @@ def hex_to_bin(stt):
     MMM = ""
     for i in range(0, len(stt), 2):
         char = stt[i:i + 2]
-        bin_char = bin(int(char, 16))[2:]
-
-        bin_char = to_8_bit(bin_char)
-
+        bin_char = bin(int(char, 16))[2:].zfill(8)
+        #bin_char = to_8_bit(bin_char)
         MMM += bin_char
     return MMM
 
