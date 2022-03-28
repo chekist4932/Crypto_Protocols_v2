@@ -1,0 +1,13 @@
+import hashlib
+
+mess = "Когда теряется равновесие, твое сознание усталое"
+h = hashlib.sha512(mess.encode("utf-8"))
+print (h.hexdigest())
+
+
+"54da08d59ea5ccc0636b1558761571980b7694c4cbef61683295b523a981df11"
+"54da08d59ea5ccc0636b1558761571980b7694c4cbef61683295b523a981df11"
+
+
+"e15712013486bf392cc829edb67c483e7f8668f03d24ad731817bd6c67b494b9"\
+"dd6a46374785750cb8bd8a39bcbaa6bbfa73e0eb323d1137bc6f3b8a24fdb0d7cf9cceaadfc57a9696449e50316031f68261318a180b05985021d52f179d594e"
