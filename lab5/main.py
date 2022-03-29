@@ -107,19 +107,25 @@ def sig_1_512(x: int) -> int:
     return int(right_rotate(x, 19,64), 2) ^ int(right_rotate(x, 61,64), 2) ^ (x >> 6)
 
 
-def hex_to_bin_v3(mess:str):
-    return bin(int.from_bytes(mess.encode("utf-8"), "big" ))[2:].zfill((len(mess.encode("utf-8").hex())//2)*8)
+def hex_to_bin_v3(mess_bytes:bytes,choose) -> int or str: # mess.encode("utf-8")
+    if choose == 1:
+        if len(bin(int.from_bytes(mess_bytes, "big"))[2:].zfill((len(mess_bytes.hex()) // 2) * 8)) > 2**64:
+            return -1
+    elif choose == 2:
+        if len(bin(int.from_bytes(mess_bytes, "big" ))[2:].zfill((len(mess_bytes.hex())//2)*8)) > 2 **128:
+            return -1
+    return bin(int.from_bytes(mess_bytes, "big" ))[2:].zfill((len(mess_bytes.hex())//2)*8)
 
 
 def right_rotate(num_:int, step:int,mode:int) -> str:
     return bin(num_)[2:].zfill(mode)[mode-step:] + bin(num_)[2:].zfill(mode)[:mode-step]
 
 
-def sha_256(mess:str):
+def sha_256(bin_mess:str):
 
     H = H_256.copy()
 
-    bin_mess = hex_to_bin_v3(mess)
+    #bin_mess = hex_to_bin_v3(mess)
     l = len(bin_mess)
     bin_mess += "1" + ( "0" * ((448- l -1)%512) ) + bin(l)[2:].zfill(64)
 
@@ -165,11 +171,11 @@ def sha_256(mess:str):
     return "".join([hex(x)[2:].zfill(8) for x in H])
 
 
-def sha_512(mess:str):
+def sha_512(bin_mess:str):
 
     H = H_512.copy()
 
-    bin_mess = hex_to_bin_v3(mess)
+
     l = len(bin_mess)
     bin_mess += "1" + ("0" * ((896 - l - 1) % 1024)) + bin(l)[2:].zfill(128)
 
@@ -265,10 +271,21 @@ def menu_():
             continue
         else:
             if choose == 1:
-                hex_mess = sha_256(receving_mess())
+                #
+                print("Len mess will be < 2**64")
+                bin_mess = hex_to_bin_v3(receving_mess().encode("utf-8"),choose)
+                if bin_mess == -1:
+                    print("Input error. Try again.")
+                    continue
+                hex_mess = sha_256(bin_mess)
                 print(hex_mess)
             elif choose == 2:
-                hex_mess = sha_512(receving_mess())
+                print("Len mess will be < 2**128")
+                bin_mess = hex_to_bin_v3(receving_mess().encode("utf-8"), choose)
+                if bin_mess == -1:
+                    print("Input error. Try again.")
+                    continue
+                hex_mess = sha_512(bin_mess)
                 print(hex_mess)
             elif choose == 3:
                 break
