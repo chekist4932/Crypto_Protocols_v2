@@ -1,2 +1,0 @@
-====================Encode on BASE64====================
-SGVsbG8sIHdvcmxkIQ==

@@ -1,4 +1,4 @@
-import main
+import body
 
 
 
@@ -20,9 +20,9 @@ def menu():
                         continue
                     else:
                         if ch == 1:
-                            main.encode_BASE64(Receving_mes())
+                            body.encode_BASE64(Receving_mes())
                         elif ch == 2:
-                            main.decode_BASE64(Receving_mes())
+                            body.decode_BASE64(Receving_mes())
                         elif ch == 3:
                             break
                         else:
@@ -38,9 +38,9 @@ def menu():
                         continue
                     else:
                         if ch == 1:
-                            main.encode_BASE32(Receving_mes())
+                            body.encode_BASE32(Receving_mes())
                         elif ch == 2:
-                            main.decode_BASE32(Receving_mes())
+                            body.decode_BASE32(Receving_mes())
                         elif ch == 3:
                             break
                         else:
@@ -92,11 +92,6 @@ def Receving_mes():
                 continue
     return mes
 
-"dfgdgsgtehyegadkjADHFSBJKGFHJDSNGJKSHFSDDKFDHASJFOKEHFJDKJBGDSGBJD454Y636747Y45643EGDFGE"
-"dfgdgsgtehyegadkjADHFSBJKGFHJDSNGJKSHFSDDKFDHASJFOKEHFJDKJBGDSGBJD454Y636747Y45643EGDFGE"
-
 menu()
 
 "C:\\Users\\GEORG\\Desktop\\GEORG\\PythonWorks\\Crypto\\lab2\\test.txt"
-
-"0J/RgNC40LLQtdGCLCDQoNGD0YHRgdC40Y8="
