@@ -1,144 +1,114 @@
 # Хеш-функция ГОСТ Р 34.11-2012 "Стрибог"
-
-
+import math
 import LPS
 
 
-def stribog():
+def get_msg():
+    while True:
+        choose = input("1.\t512 bit\n2.\t256 bit\n-\t")
+        if choose == "1":
+            Layout = 512
+            break
+        elif choose == "2":
+            Layout = 256
+            break
+        else:
+            print("Input error. Try again.")
+            continue
 
-     while True:
-          try:
-               choose = int(input("1.\t512 bit\n2.\t256 bit\n-\t"))
-          except Exception:
-               print("Input error. Try again.")
-               continue
-          else:
-               if choose == 1:
-                    mod = 512
-                    break
-               elif choose == 2:
-                    mod = 256
-                    break
-               else:
+    while True:
+        choose = input("Iput:\n1.\tKeyboard\n2.\tFile\n-\t")
+        if choose == "1":
+            mes = input("\nInput your message:\n-\t")
+            # Msg_bin = bin(int.from_bytes(mes.encode("utf-8"), "little"))[2:].zfill(
+            #   (len(mes.encode("utf-8").hex()) // 2) * 8)
+            # Msg = mes.encode("utf-8")
+            Msg = bytearray(mes.encode("utf-8"))
+            Msg.reverse()
+            Msg = bytes(Msg)
+            return Msg, Layout
+        elif choose == "2":
+            while True:
+                print("\nInput mess in lab4\\mes.txt")
+                mp_choose = input("1.\tGo\n-\t")
+                if mp_choose == "1":
+                    try:
+                        file = open("mes.txt", encoding="utf-8")
+                        mes = file.read()
+                        file.close()
+                        Msg = bytearray(mes.encode("utf-8"))
+                        Msg.reverse()
+                        Msg = bytes(Msg)
+
+                    except Exception as err:
+                        print(err)
+                        continue
+                    else:
+                        return Msg, Layout
+                else:
                     print("Input error. Try again.")
                     continue
-
-     while True:
-          try:
-               choose = int(input("Iput:\n1.\tFile\n2.\tKeyboard\n-\t"))
-          except Exception:
-               print("Input error. Try again.")
-               continue
-          else:
-               if choose == 1:
-                    while True:
-                         print("\nInput mess in mes.txt")
-                         try:
-                              mp_choose = int(input("1.\tMes in hex\n2.\tMes in Unicod\n-\t"))
-                         except Exception:
-                              print("Input error. Try again.")
-                              continue
-                         else:
-                              if mp_choose == 1:
-                                   file = open("mes.txt", encoding="utf-8")
-                                   mes = file.read()
-                                   file.close()
-                                   break
-                              elif mp_choose == 2:
-                                   file = open("mes.txt", encoding="utf-8")
-                                   mes = file.read()
-                                   file.close()
-                                   ####
-                                   mp = mes.encode("utf-8").hex()
-                                   mes = [mp[x:x+2] for x in range(0,len(mp),2)]
-                                   mes.reverse()
-                                   mes = "".join(mes)
-                                   break
-                              else:
-                                   print("Input error. Try again.")
-                                   continue
-                    break
-               elif choose == 2:
-                    while True:
-                         print("\nInput mes:")
-                         try:
-                              mp_choose = int(input("1.\tMes in hex\n2.\tMes in Unicod\n-\t"))
-                         except Exception:
-                              print("Input error. Try again.")
-                              continue
-                         else:
-                              if mp_choose == 1:
-                                   mes = input("Input your message:\n-\t")
-                                   break
-                              elif mp_choose == 2:
-                                   mes = input("Input your message:\n-\t")
-                                   mp = mes.encode("utf-8").hex()
-                                   mes = [mp[x:x + 2] for x in range(0, len(mp), 2)]
-                                   mes.reverse()
-                                   mes = "".join(mes)
-                                   break
-                              else:
-                                   print("Input error. Try again.")
-                                   continue
-                    break
-               else:
-                    print("Input error. Try again.")
-                    continue
-
-     m = LPS.hex_to_bin(mes)
-
-     # if верстка 512 бит
-     if mod == 512:
-          h = "0" * 512
-
-     elif mod == 256:
-          h = "00000001" * 64
-
-     N = "0" * 512
-     E = "0" * 512
-
-     while True:
-          if len(m) < 512:
-               mod_prime = len(m)
-               m = ("0" * (511 - mod_prime)) + '1' + m
-
-               h = LPS.g_N(h, m, N)
-               N = bin((int(N, 2) + mod_prime) % 2 ** 512)[2:]
-               while len(N) % 512 != 0:
-                    N = "0" + N
-               E = bin((int(E, 2) + int(m, 2)) % 2 ** 512)[2:]
-               while len(E) % 512 != 0:
-                    E = "0" + E
-
-               o = "0" * 512
-               h = LPS.g_N(h, N, o)
-               if mod == 512:
-                    h = LPS.g_N(h, E, o)
-               elif mod == 256:
-                    h = LPS.g_N(h, E, o)[:256]
-
-               if mp_choose == 1:
-                    print(LPS.bin_to_hex(h))
-               elif mp_choose == 2:
-                    new = ""
-                    for i in [LPS.bin_to_hex(h)[i:i + 2] for i in range(0, len(LPS.bin_to_hex(h)), 2)]:
-                         new += i[::-1]
-                    print(new[::-1])
-
-               break
-          else:
-               mp_m = m
-               mod_pr = len(m)
-               m = mp_m[mod_pr - 512:]
-               h = LPS.g_N(h, m, N)
-               N = bin((int(N, 2) + 512) % 2 ** 512)[2:]
-               while len(N) % 512 != 0:
-                    N = "0" + N
-               E = bin((int(E, 2) + int(m, 2)) % 2 ** 512)[2:]
-               while len(E) % 512 != 0:
-                    E = "0" + E
-               m = mp_m[:mod_pr - 512]
+            break
+        else:
+            print("Input error. Try again.")
+            continue
 
 
+def gost34122012(Msg: bytes, Layout: int):
+    if Layout == 512:
+        hash_ = b'\x00' * 64
 
-stribog()
+    elif Layout == 256:
+        hash_ = b'\x01' * 64
+
+    N_vector = b'\x00' * 64
+    E_vector = b'\x00' * 64
+
+    big_lit = "big"
+
+    while True:
+        if len(Msg) < 64:
+            Len_Msg = len(Msg)
+            Msg = (b"\x00" * (63 - Len_Msg)) + b"\x01" + Msg
+            hash_ = LPS.g_N(hash_, Msg, N_vector)
+
+            n_num = (int(N_vector.hex(), 16) + (Len_Msg * 8)) % pow(2, 512)
+            mp = n_num.to_bytes(math.ceil(math.log2(n_num) / 8), big_lit)
+            N_vector = (b"\x00" * (64 - len(mp))) + mp
+
+            e_num = (int(E_vector.hex(), 16) + int(Msg.hex(), 16)) % pow(2, 512)
+            mp = e_num.to_bytes(math.ceil(math.log2(e_num) / 8), big_lit)
+            E_vector = (b"\x00" * (64 - len(mp))) + mp
+
+            Zero_vector = b'\x00' * 64
+            hash_ = LPS.g_N(hash_, N_vector, Zero_vector)
+
+            if Layout == 512:
+                hash_ = LPS.g_N(hash_, E_vector, Zero_vector)
+            elif Layout == 256:
+                hash_ = LPS.g_N(hash_, E_vector, Zero_vector)[:32]
+
+            result = bytearray(hash_)
+            result.reverse()
+            return bytes(result).hex()
+            # break
+        else:
+            Mp_Msg = Msg
+            mod_pr = len(Msg)
+            Msg = Mp_Msg[mod_pr - 64:]
+            hash_ = LPS.g_N(hash_, Msg, N_vector)
+
+            n_num = (int(N_vector.hex(), 16) + 512) % pow(2, 512)
+            mp = n_num.to_bytes(math.ceil(math.log2(n_num) / 8), big_lit)
+            N_vector = (b"\x00" * (64 - len(mp))) + mp
+
+            e_num = (int(E_vector.hex(), 16) + int(Msg.hex(), 16)) % pow(2, 512)
+            mp = e_num.to_bytes(math.ceil(math.log2(e_num) / 8), big_lit)
+            E_vector = (b"\x00" * (64 - len(mp))) + mp
+
+            Msg = Mp_Msg[:mod_pr - 64]
+
+
+if __name__ == '__main__':
+    Msg, Layout = get_msg()
+    print(gost34122012(Msg, Layout))
