@@ -61,6 +61,10 @@ class RSA:
         _msg_len_bytes = len(encrypted_msg)
         _key_byte_len = len(
             (sec_key[0] * sec_key[1]).to_bytes(math.ceil(math.log2((sec_key[0] * sec_key[1])) / 8), byteorder="big"))
+
+        if _key_byte_len > 2048:
+            _key_byte_len = 2048
+
         _block_len = _key_byte_len - 1
 
         _encrypted_msg_blocks = [int.from_bytes(encrypted_msg[x:x + _block_len + 1], "big") for x in
@@ -195,7 +199,7 @@ class RSA:
         file.close()
 
         file = open(f"results\\SecKey - {date}.json", "w")
-        json.dump(sec_k, file)
+        json.dump(sec_k, file, indent=4)
         file.close()
 
     def pkcs_7_int(self, encrypted_msg: list[int], date):
