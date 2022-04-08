@@ -11,9 +11,6 @@ class RSA:
         self.data = str(datetime.datetime.now())[:-7].replace(":", "-")
         pass
 
-    def __hex_to_bin_v3(self, mess_bytes: bytes):
-        pass
-
     def key_gen(self, key_digit):
         sec_key = [self.__PrimeNum(key_digit // 2, 100), self.__PrimeNum(key_digit // 2, 100)]  # [p, q, d]
         public_key = [sec_key[0] * sec_key[1]]  # [n = p*q, exp]
@@ -32,8 +29,13 @@ class RSA:
 
     @staticmethod
     def encrypt(pub_key: list[int, int], bytes_mess: bytes):
+
         _msg_len_bytes = len(bytes_mess)
         _key_byte_len = len(pub_key[0].to_bytes(math.ceil(math.log2(pub_key[0]) / 8), byteorder="big"))
+
+        if _key_byte_len > 2048:
+            _key_byte_len = 2048
+
         # y = math.log2(x)
         # math.ceil( y / 8 )
         #
@@ -69,21 +71,17 @@ class RSA:
 
         _byte_check = decrypted_msg[-1][-1]
         __checker = 0
-        print(_byte_check)
-        for i in range(len(decrypted_msg[-1])-1, (_block_len - _byte_check)-1, -1):
+
+        for i in range(len(decrypted_msg[-1]) - 1, (_block_len - _byte_check) - 1, -1):
             print(i)
             if decrypted_msg[-1][i] == _byte_check:
                 __checker += 1
-        print(__checker)
-        # input()
+
         if __checker == _byte_check:
             decrypted_msg[-1] = decrypted_msg[-1][:_block_len - _byte_check]
             return b"".join(decrypted_msg)
         else:
             raise ValueError("Wrong key")
-
-
-
 
     def __test_miller(self, flag: list):
         # BODY
