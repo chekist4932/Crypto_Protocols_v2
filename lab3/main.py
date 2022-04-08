@@ -64,10 +64,15 @@ def menu():
                                 continue
                             else:
                                 print("\nEncryption in progress\n")
-                                encrypted_msg = my_rsa.RSA().encrypt(pub_key,msg)
-                                my_rsa.RSA().pkcs_7_bytes(encrypted_msg,my_rsa.RSA().data)
-                                print("\n\033[36mEncryption completed.\033[0m\n")
-                                break
+                                try:
+                                    encrypted_msg = my_rsa.RSA().encrypt(pub_key,msg)
+                                except ValueError as err:
+                                    print(f"Input error. Try again!. {err}")
+                                    continue
+                                else:
+                                    my_rsa.RSA().pkcs_7_bytes(encrypted_msg,my_rsa.RSA().data)
+                                    print("\n\033[36mEncryption completed.\033[0m\n")
+                                    break
                         break
 
 
@@ -109,6 +114,6 @@ menu()
 
 
 # C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\msg.txt
-#
-#
-#
+# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\PubKey - 2022-04-08 10-23-28.json
+# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\SecKey - 2022-04-08 10-23-28.json
+# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\EncMsg - 2022-04-08 10-24-30.json

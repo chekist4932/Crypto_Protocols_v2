@@ -33,10 +33,6 @@ class RSA:
     @staticmethod
     def encrypt(pub_key: list[int, int], bytes_mess: bytes):
         _msg_len_bytes = len(bytes_mess)
-        # print(f"Message len in bytes - {_msg_len_bytes}")
-        # print(f"public key - {pub_key[0]}")
-        # tt = pub_key[0].bit_length()
-        # print(f"key bit len - {tt} | {tt // 8}")
         _key_byte_len = len(pub_key[0].to_bytes(math.ceil(math.log2(pub_key[0]) / 8), byteorder="big"))
         # y = math.log2(x)
         # math.ceil( y / 8 )
@@ -46,58 +42,48 @@ class RSA:
         # Округление в большую сторону кратность степени размера блока 8-ке
         # _pad_bytes_size = кратности степени размера блока 8-ке.
 
-        # _key_byte_len = len(pub_key[0].to_bytes(pub_key[0].bit_length() // 8, byteorder="big")) # ( pub_key[0].bit_length() // 8 ) - размерность байт
-        # print(f"key len in bytes - {_key_byte_len}")
-        # print(f"Block len - {_block_len}")
-
         _msg_blocks = [bytes_mess[x:x + _block_len] for x in range(0, _msg_len_bytes, _block_len)]
-        # print(f"Message blocks - {_msg_blocks}\nCount blocks - {len(_msg_blocks)}")
-        # for i in _msg_blocks:
-        # print(f"Len of one block - {len(i)}")
-        # _block_len - len(_msg_blocks[-1])
+
         _count_pad = _block_len - len(_msg_blocks[-1])
         _padding_byte = (_count_pad).to_bytes(_pad_bytes_size, byteorder="big")
-        # print(f"Byte to padding - {_padding_byte} | {len(_padding_byte)} | {_pad_bytes_size}")
 
         for i in range(_count_pad):
             _msg_blocks[-1] += _padding_byte
 
-        for _block in _msg_blocks:
-            # print(f"Len of one block - {len(i)}")
-            # print(f"Num in block - {int.from_bytes(_block,byteorder= 'big')}")
-            # print(int.from_bytes(_block,byteorder= 'big') < pub_key[0])
-
-            pass
-        # .to_bytes(_block_len, byteorder="big")
-        # print(mp)
         return b"".join([x.to_bytes(math.ceil(math.log2(x) / 8), byteorder="big") for x in [
             pow(int.from_bytes(_block, byteorder='big'), pub_key[1], pub_key[0])
             for _block in _msg_blocks.copy()]])
 
     def decrypt(self, sec_key: list[int, int, int], encrypted_msg: bytes):
+
         _msg_len_bytes = len(encrypted_msg)
         _key_byte_len = len(
             (sec_key[0] * sec_key[1]).to_bytes(math.ceil(math.log2((sec_key[0] * sec_key[1])) / 8), byteorder="big"))
-        # print(f"key len in bytes - {_key_byte_len}")
         _block_len = _key_byte_len - 1
 
         _encrypted_msg_blocks = [int.from_bytes(encrypted_msg[x:x + _block_len + 1], "big") for x in
                                  range(0, _msg_len_bytes, _block_len + 1)]
 
-        # decrypted_num = [pow(num, sec_key[2], sec_key[0] * sec_key[1]) for num in num_list]
-        # print(_encrypted_msg_blocks)
-
         decrypted_msg = [x.to_bytes(_block_len, byteorder="big") for x in
                          [pow(num, sec_key[2], sec_key[0] * sec_key[1]) for num in _encrypted_msg_blocks]]
 
         _byte_check = decrypted_msg[-1][-1]
-        checker = 0
+        __checker = 0
+        print(_byte_check)
+        for i in range(len(decrypted_msg[-1])-1, (_block_len - _byte_check)-1, -1):
+            print(i)
+            if decrypted_msg[-1][i] == _byte_check:
+                __checker += 1
+        print(__checker)
+        # input()
+        if __checker == _byte_check:
+            decrypted_msg[-1] = decrypted_msg[-1][:_block_len - _byte_check]
+            return b"".join(decrypted_msg)
+        else:
+            raise ValueError("Wrong key")
 
-        # print(len(decrypted_msg[-1][:_block_len - _byte_check]))
-        # print(decrypted_msg[-1][:_block_len - _byte_check])
-        decrypted_msg[-1] = decrypted_msg[-1][:_block_len - _byte_check]
 
-        return b"".join(decrypted_msg)
+
 
     def __test_miller(self, flag: list):
         # BODY
@@ -119,7 +105,7 @@ class RSA:
 
         return False
 
-    def __PrimeNum(self, k, t):
+    def __PrimeNum_arch(self, k, t):
         def check(p):
             for i in range(t):
                 if self.__test_miller([p, random.randint(2, p - 2)]) is True:
@@ -141,7 +127,30 @@ class RSA:
                 continue
             else:
                 break
-        # print(f"Prime number:\t\033[36m{p}\033[0m")
+        return p
+
+    def __PrimeNum(self, prime_size, iter_count):
+        def check(maybe_prime):
+            for step in range(iter_count):
+                if self.__test_miller([maybe_prime, random.randint(2, maybe_prime - 2)]) is True:
+                    if step == iter_count - 1:
+                        return maybe_prime
+                    else:
+                        continue
+                else:
+                    return False
+
+        while True:
+            prime = []
+            for i in range(prime_size):
+                prime.append(str(round(random.random())))
+            prime[0] = "1"
+            prime[-1] = "1"
+            p = int("".join(prime), 2)
+            if check(p) is False:
+                continue
+            else:
+                break
         return p
 
     def __EucAlg(self, x: int, y: int):
