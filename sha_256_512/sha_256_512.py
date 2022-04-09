@@ -118,10 +118,11 @@ def right_rotate(num_: int, step: int, mode: int) -> str:
     return bin(num_)[2:].zfill(mode)[mode - step:] + bin(num_)[2:].zfill(mode)[:mode - step]
 
 
-def sha_256(bin_mess: str):
+def sha_256(bytes_msg: bytes):
     H = H_256.copy()
-
-    # bin_mess = hex_to_bin_v3(mess)
+    bin_mess = hex_to_bin_v3(bytes_msg, 1)
+    if bin_mess == -1:
+        raise ValueError("Bytes so large.")
     l = len(bin_mess)
     bin_mess += "1" + ("0" * ((448 - l - 1) % 512)) + bin(l)[2:].zfill(64)
 
@@ -131,7 +132,6 @@ def sha_256(bin_mess: str):
 
         W_t = [int(bin_mess[i][x:x + 32], 2) for x in range(0, 512, 32)]
 
-        #
         for j in range(48):
             W_t.append(0)
         for t in range(16, 64):
@@ -155,19 +155,23 @@ def sha_256(bin_mess: str):
             c = b
             b = a
             a = (Temp1 + Temp2) % (2 ** 32)
-        H[0] = (H[0] + a) % (2 ** 32)  # pow((H[0] + a), 1, pow(2, 32))
-        H[1] = (H[1] + b) % (2 ** 32)  # pow((H[1] + b), 1, pow(2, 32))
-        H[2] = (H[2] + c) % (2 ** 32)  # pow((H[2] + c), 1, pow(2, 32))
-        H[3] = (H[3] + d) % (2 ** 32)  # pow((H[3] + a), 1, pow(2, 32))
+        H[0] = (H[0] + a) % (2 ** 32)
+        H[1] = (H[1] + b) % (2 ** 32)
+        H[2] = (H[2] + c) % (2 ** 32)
+        H[3] = (H[3] + d) % (2 ** 32)
         H[4] = (H[4] + e) % (2 ** 32)
         H[5] = (H[5] + f) % (2 ** 32)
         H[6] = (H[6] + g) % (2 ** 32)
         H[7] = (H[7] + h) % (2 ** 32)
-    return "".join([hex(x)[2:].zfill(8) for x in H])
+    return b"".join([bytes.fromhex(hex(x)[2:].zfill(8)) for x in H])
 
 
-def sha_512(bin_mess: str):
+def sha_512(bytes_msg: bytes):
     H = H_512.copy()
+    bin_mess = hex_to_bin_v3(bytes_msg, 2)
+
+    if bin_mess == -1:
+        raise ValueError("Bytes so large.")
 
     l = len(bin_mess)
     bin_mess += "1" + ("0" * ((896 - l - 1) % 1024)) + bin(l)[2:].zfill(128)
@@ -210,99 +214,22 @@ def sha_512(bin_mess: str):
         H[6] = (H[6] + g) % (2 ** 64)
         H[7] = (H[7] + h) % (2 ** 64)
 
-    return "".join([hex(x)[2:].zfill(16) for x in H])
+    return b"".join([bytes.fromhex(hex(x)[2:].zfill(16)) for x in H])
 
 
-def receving_mess():
-    while True:
-        try:
-            choose = int(input("Iput:\n1.\tFile\n2.\tKeyboard\n-\t"))
-        except Exception:
-            print("Input error. Try again.")
-            continue
-        else:
-            if choose == 1:
-                while True:
-                    print("\nInput mess in mess.txt")
-                    try:
-                        file = open("mess.txt", encoding="utf-8")
-                        mess = file.read()
-                        file.close()
-                    except Exception as er:
-                        print(f"Input error. Try again.\n{er}")
-                        continue
-                    else:
-                        break
-                break
-            elif choose == 2:
-                while True:
-                    print("\nInput mes:")
-                    try:
-                        mess = input("Input your message:\n-\t")
-                    except Exception as er:
-                        print(f"Input error. Try again.\n{er}")
-                        continue
-                    else:
-                        break
-                break
-            else:
-                print("Input error. Try again.")
-                continue
-
-    return mess
 
 
-def menu_():
-    while True:
-        try:
-            choose = int(input("1.\tSHA-256\n2.\tSHA-512\n3.\tExit\n-\t"))
-        except Exception:
-            print("Input error. Try again.")
-            continue
-        else:
-            if choose == 1:
-                #
-                print("Len mess will be < 2**64")
-                bin_mess = hex_to_bin_v3(receving_mess().encode("utf-8"), choose)
-                if bin_mess == -1:
-                    print("Input error. Try again.")
-                    continue
-                hex_mess = sha_256(bin_mess)
-                print(hex_mess)
-            elif choose == 2:
-                print("Len mess will be < 2**128")
-                bin_mess = hex_to_bin_v3(receving_mess().encode("utf-8"), choose)
-                if bin_mess == -1:
-                    print("Input error. Try again.")
-                    continue
-                hex_mess = sha_512(bin_mess)
-                print(hex_mess)
-            elif choose == 3:
-                break
-            else:
-                print("Input error. Try again.")
-                continue
-
-if __name__ == "__main__":
-    menu_()
 
 
-# 2a2db445c6a8af5cf015793d1da0e13d1be3c07ab8de429542527812a6cc41ea
-# 2a2db445c6a8af5cf015793d1da0e13d1be3c07ab8de429542527812a6cc41ea
-# mess = "hello wpr;dwfwe34253gfbfварпывапупвимчвр4562цaadsgdgegrw"
 
+# mess = "hello"
 # mess.encode("utf-8")
-
 # t = hashlib.sha512(mess.encode("utf-8")).hexdigest()
+# print(t)
 
-# print(res == hashlib.sha256("привет мир".encode("utf-8")).hexdigest())
-# bin_mes = hex_to_bin_v3(mess.encode("utf-8"),64)
-# print(timeit.timeit(lambda : sha_256(bin_mes),number=10000))
+# print(timeit.timeit(lambda : sha_256(mess.encode("utf-8")),number=10000))
 # print(timeit.timeit(lambda : hashlib.sha256(mess.encode("utf-8")).hexdigest(),number=10000))
 
-# print(timeit.timeit(lambda : int("8e20faa72ba0b470",16),number=10000000))
-# print(timeit.timeit(lambda :unpack(">Q", hexdec("8e20faa72ba0b470"))[0],number=10000000))
-# print(int("8e20faa72ba0b470",16))
 
 # mp = mes.encode("utf-8").hex()
 # print(timeit.timeit(lambda :bin(int(mess.encode("utf-8").hex(),16))[2:].zfill(len(mess)*8),number=1000000))

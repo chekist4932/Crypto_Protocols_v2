@@ -7,10 +7,12 @@ def path_getter(mode):
     while True:
         try:
             path = input(f"Input path to {mode}:\n-\t")
+            file = open(path)
         except Exception as err:
             print(f"Uncorrect path. {err}.")
             continue
         else:
+            file.close()
             return path
 
 
@@ -98,7 +100,7 @@ def menu():
                                 decrypted_msg = my_rsa.RSA().decrypt(sec_key,encr)
                                 print("\n\033[36mEncryption completed.\033[0m\n")
                                 print(decrypted_msg.decode("utf-8"))
-                                with open(f"results\\DecMsg - {my_rsa.RSA().data}", "w", encoding="utf-8") as file:
+                                with open(f"results\\DecMsg - {my_rsa.RSA().data}.txt", "w", encoding="utf-8") as file:
                                     file.write(decrypted_msg.decode("utf-8"))
                                 break
                     break
@@ -109,11 +111,10 @@ def menu():
                 break
     pass
 
-
 menu()
 
-
 # C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\msg.txt
-# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\PubKey - 2022-04-08 10-23-28.json
-# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\SecKey - 2022-04-08 10-23-28.json
-# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\EncMsg - 2022-04-08 10-24-30.json
+# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\SecKey - 2022-04-08 13-16-46.json
+# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\PubKey - 2022-04-08 13-16-46.json
+# C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\EncMsg - 2022-04-08 20-53-24.json
+

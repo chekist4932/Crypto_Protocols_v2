@@ -3,10 +3,13 @@ import hashlib
 #mess = "Когда теряется равновесие твое сознание усталое"
 mess = "Мне бы твои пули переплавить в струны.."
 #mess = "Привет, мама."
-h = hashlib.sha512(mess.encode("utf-8"))
+mess = "dgdвпвпркнувм￠"
+h = hashlib.sha256(mess.encode("utf-8"))
 print (h.hexdigest())
 
 "11fb26befaa600a7f852f8e2751cde597b28f8ea119764af2a18e3ed9a8dcc78082e4f3edf6f2b616b01b559fca599f9da208699e33a793a46698b38239c6c53"
+
+"cd3c3ec8bf7356ed115476d7daf8138129cbdd512b0d484aefc396c7fa0cfe3e"
 
 print(type(mess.encode("utf-8")))
 "660b4b4ad485af0ee8c514b7214cc4e68b0df5b2086075a0ccf1508f92cdeb93"
