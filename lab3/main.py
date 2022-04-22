@@ -3,6 +3,7 @@ import math
 import datetime
 import my_rsa
 
+
 def path_getter(mode):
     while True:
         try:
@@ -14,7 +15,6 @@ def path_getter(mode):
         else:
             file.close()
             return path
-
 
 
 def menu():
@@ -67,23 +67,22 @@ def menu():
                             else:
                                 print("\nEncryption in progress\n")
                                 try:
-                                    encrypted_msg = my_rsa.RSA().encrypt(pub_key,msg)
+                                    encrypted_msg = my_rsa.RSA().encrypt(pub_key, msg)
                                 except ValueError as err:
                                     print(f"Input error. Try again!. {err}")
                                     continue
                                 else:
-                                    my_rsa.RSA().pkcs_7_bytes(encrypted_msg,my_rsa.RSA().data)
+                                    my_rsa.RSA().pkcs_7_bytes(encrypted_msg, my_rsa.RSA().data)
                                     print("\n\033[36mEncryption completed.\033[0m\n")
                                     break
                         break
-
 
                 pass
             elif choose == 3:  # decryption
                 while True:
                     path_encr = path_getter("encrypted msg")
                     try:
-                        encr = bytes.fromhex(my_rsa.RSA().read_out_file(path_encr,"en_msg"))
+                        encr = bytes.fromhex(my_rsa.RSA().read_out_file(path_encr, "en_msg"))
                     except Exception as err:
                         print(f"Input error. Try again!. {err}")
                         continue
@@ -97,7 +96,7 @@ def menu():
                                 continue
                             else:
                                 print("\nDecryption in progress\n")
-                                decrypted_msg = my_rsa.RSA().decrypt(sec_key,encr)
+                                decrypted_msg = my_rsa.RSA().decrypt(sec_key, encr)
                                 print("\n\033[36mEncryption completed.\033[0m\n")
                                 print(decrypted_msg.decode("utf-8"))
                                 with open(f"results\\DecMsg - {my_rsa.RSA().data}.txt", "w", encoding="utf-8") as file:
@@ -105,11 +104,11 @@ def menu():
                                 break
                     break
 
-
                 pass
             elif choose == 4:  # exit
                 break
     pass
+
 
 menu()
 
@@ -118,3 +117,4 @@ menu()
 # C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\PubKey - 2022-04-08 13-16-46.json
 # C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\results\EncMsg - 2022-04-08 20-53-24.json
 
+#  C:\Users\GEORG\Desktop\GEORG\PythonWorks\Crypto\lab3\msg_2.txt

@@ -112,3 +112,7 @@ def gost34122012(Msg: bytes, Layout: int):
 if __name__ == '__main__':
     Msg, Layout = get_msg()
     print(gost34122012(Msg, Layout))
+
+
+# здорова папаша
+# ad5428d49215697a39fab01c6719165e5d9c41014eaf1d324915d65c54f5cdec1b363966b0b6f2e1fcb93f2e2724f65a11b220128e382e5b7460e084fa118640

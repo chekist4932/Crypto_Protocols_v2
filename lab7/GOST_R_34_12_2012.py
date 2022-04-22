@@ -1,3 +1,11 @@
+# Лабораторная работа №4
+# Реализация хеш-функции ГОСТ Р 34.11-2012 "Стрибог"
+
+
+import math
+import sys
+
+
 S_const = [252, 238, 221, 17, 207, 110, 49, 22, 251, 196, 250, 218, 35, 197, 4, 77, 233,
            119, 240, 219, 147, 46, 153, 186, 23, 54, 241, 187, 20, 205, 95, 193, 249, 24,
            101, 90, 226, 92, 239, 33, 129, 28, 60, 66, 139, 1, 142, 79, 5, 132, 2, 174, 227,
@@ -36,7 +44,6 @@ L_const = [b'\x8e \xfa\xa7+\xa0\xb4p', b'G\x10}\xdd\x9bPZ8', b'\xad\x08\xb0\xe0\
            b'8S\xdc7\x12 \xa2G', b'\x1c\xa7n\x95\t\x10Q\xad', b'\x0e\xdd7\xc4\x8a\x08\xa6\xd8', b'\x07\xe0\x95bE\x04Sl',
            b'\x8dp\xc41\xac\x02\xa76', b'\xc88b\x96V\x01\xdd\x1b', b'd\x1c1K+\x8e\xe0\x83']
 
-
 C_const = [
     b'\xb1\x08[\xda\x1e\xca\xda\xe9\xeb\xcb/\x81\xc0e|\x1f/jvC.E\xd0\x16qN\xb8\x8du\x85\xc4\xfcK|\xe0\x91\x92gi\x01\xa2B*\x08\xa4`\xd3\x15\x05vt6\xcctM#\xdd\x80eY\xf2\xa6E\x07',
     b'o\xa3\xb5\x8a\xa9\x9d/\x1aO\xe3\x9dF\x0fp\xb5\xd7\xf3\xfe\xear\n#+\x98a\xd5^\x0f\x16\xb5\x011\x9a\xb5\x17k\x12\xd6\x99X\\\xb5a\xc2\xdb\n\xa7\xcaU\xdd\xa2\x1b\xd7\xcb\xcdV\xe6y\x04p!\xb1\x9b\xb7',
@@ -52,27 +59,45 @@ C_const = [
     b'7\x8e\xe7g\xf1\x161\xba\xd2\x13\x80\xb0\x04I\xb1z\xcd\xa4<2\xbc\xdf\x1dw\xf8 \x12\xd40!\x9f\x9b]\x80\xef\x9d\x18\x91\xcc\x86\xe7\x1d\xa4\xaa\x88\xe1(R\xfa\xf4\x17\xd5\xd9\xb2\x1b\x99H\xbc\x92J\xf1\x1b\xd7 ']
 
 
-def XOR_(vec_1: bytes, vec_2: bytes) -> bytes:
+def XOR_orig(vec_1: bytes, vec_2: bytes) -> bytes:
     dimension = len(vec_1)
     result = bytearray(dimension)
     for i in range(dimension):
         result[i] = vec_1[i] ^ vec_2[i]
     return bytes(result)
+    # return bytes(vec_1[i] ^ vec_2[i] for i in range(len(vec_1)))
+
+def XOR_1(vec_1: bytes, vec_2: bytes, byteorder=sys.byteorder):
+    # int_var = int.from_bytes(var, byteorder)
+    # int_key = int.from_bytes(key, byteorder)
+    int_enc = int.from_bytes(vec_2, byteorder) ^ int.from_bytes(vec_1, byteorder)
+    return int_enc.to_bytes(len(vec_1), byteorder)
+
+def XOR_( vec_1: bytes, vec_2: bytes):
+    int_enc = int.from_bytes(vec_2, "big") ^ int.from_bytes(vec_1, "big")
+    return int_enc.to_bytes(max(len(vec_1), len(vec_2)), "big")
 
 
-def s_trans(msg: bytes) -> bytes:
-    dimension = len(msg)
-    result = bytearray(dimension)
-    for i in range(dimension):
-        result[i] = S_const[msg[i]]
-    return bytes(result)
+# def s_trans(msg: bytes) -> bytes:
+#     dimension = len(msg)
+#     result = bytearray(dimension)
+#     for i in range(dimension):
+#         result[i] = S_const[msg[i]]
+#     return bytes(result)
 
 
-def p_trans(s_result: bytes) -> bytes:
-    dimension = len(s_result)
-    result = bytearray(dimension)
-    for k in range(dimension):
-        result[k] = s_result[P_const[k]]
+# def p_trans(s_result: bytes) -> bytes:
+#     dimension = len(s_result)
+#     result = bytearray(dimension)
+#     for k in range(dimension):
+#         result[k] = s_result[P_const[k]]
+#     return bytes(result)
+
+
+def ps_trans(msg: bytes) -> bytes:
+    result = bytearray(64)
+    for i in range(64):
+        result[P_const[i]] = S_const[msg[i]]
     return bytes(result)
 
 
@@ -92,24 +117,88 @@ def l_trans(p_result: bytes) -> bytes:
 
 
 def LPS(msg: bytes) -> bytes:
-    return l_trans(p_trans(s_trans(msg)))
+    return l_trans(ps_trans(msg))
 
 
 def E_trans(k1: bytes, msg: bytes) -> bytes:
-    k = [0] * 13
-    k[0] = k1
+    k = [k1]
     for i in range(1, 13):
-        k[i] = LPS(XOR_(k[i - 1], C_const[i - 1]))
+        k.append(LPS(XOR_(k[i - 1], C_const[i - 1])))
     for j in range(13):
         if j == 12:
             msg = XOR_(k[j], msg)
             break
-        msg = XOR_(k[j], msg)
-        msg = LPS(msg)
+        msg = LPS(XOR_(k[j], msg))
     return msg
 
 
 def g_N(hash_: bytes, msg: bytes, n_vector: bytes) -> bytes:
-    hash_ = XOR_(XOR_(E_trans(LPS(XOR_(hash_, n_vector)), msg), hash_), msg)
-    return hash_
+    # k1 = LPS(XOR_(hash_, n_vector))
+    # e_res = E_trans(k1, msg)
+    # hash_ = XOR_(XOR_(E_trans(LPS(XOR_(hash_, n_vector)), msg), hash_), msg)
+    return XOR_(XOR_(E_trans(LPS(XOR_(hash_, n_vector)), msg), hash_), msg)
 
+
+class GOST_34_11_2012:
+
+    def __init__(self, data: bytes, size: int):
+        Msg = bytearray(data)
+        Msg.reverse()
+        self.__data = bytes(Msg)
+
+        self.__size = size // 8
+
+        self.__big_lit = "big"
+
+        if self.__size != 32 and self.__size != 64:
+            raise ValueError("Size got 512 or 256")
+
+        self.__hash_ = 64 * (b'\x00' if self.__size == 64 else b'\x01')
+
+    def hash_(self):
+        __N_vector = b'\x00' * 64
+        __E_vector = b'\x00' * 64
+        while True:
+            if len(self.__data) < 64:
+                Len_Msg = len(self.__data)
+                self.__data = (b"\x00" * (63 - Len_Msg)) + b"\x01" + self.__data
+                self.__hash_ = g_N(self.__hash_, self.__data, __N_vector)
+
+                # n_num = (int(__N_vector.hex(), 16) + (Len_Msg * 8)) % pow(2, 512)
+                n_num = (int.from_bytes(__N_vector, self.__big_lit) + (Len_Msg * 8)) % pow(2, 512)
+                mp = n_num.to_bytes(math.ceil(math.log2(n_num) / 8), self.__big_lit)
+                __N_vector = (b"\x00" * (64 - len(mp))) + mp
+
+                e_num = (int.from_bytes(__E_vector, self.__big_lit) + int.from_bytes(self.__data,
+                                                                                     self.__big_lit)) % pow(2, 512)
+                mp = e_num.to_bytes(math.ceil(math.log2(e_num) / 8), self.__big_lit)
+                __E_vector = (b"\x00" * (64 - len(mp))) + mp
+
+                Zero_vector = b'\x00' * 64
+                self.__hash_ = g_N(g_N(self.__hash_, __N_vector, Zero_vector), __E_vector, Zero_vector)[:self.__size]
+
+                result = bytearray(self.__hash_)
+                result.reverse()
+                return bytes(result)
+
+            else:
+                Mp_Msg = self.__data
+                mod_pr = len(self.__data)
+                self.__data = Mp_Msg[mod_pr - 64:]
+                self.__hash_ = g_N(self.__hash_, self.__data, __N_vector)
+
+                n_num = (int(__N_vector.hex(), 16) + 512) % pow(2, 512)
+                mp = n_num.to_bytes(math.ceil(math.log2(n_num) / 8), self.__big_lit)
+                __N_vector = (b"\x00" * (64 - len(mp))) + mp
+
+                e_num = (int(__E_vector.hex(), 16) + int(self.__data.hex(), 16)) % pow(2, 512)
+                mp = e_num.to_bytes(math.ceil(math.log2(e_num) / 8), self.__big_lit)
+                __E_vector = (b"\x00" * (64 - len(mp))) + mp
+
+                self.__data = Mp_Msg[:mod_pr - 64]
+
+
+
+# print(GOST_34_11_2012("HELLO".encode("utf-8"), 512).hash_().hex())
+# 117b932a4014e280c1e38953be39b209a77847864963a037446d067e2f29f17402c1537ec910fbb11001b60a87d368e70ce6bf76ed96e5528b689dacdbc9f7be
+# 117b932a4014e280c1e38953be39b209a77847864963a037446d067e2f29f17402c1537ec910fbb11001b60a87d368e70ce6bf76ed96e5528b689dacdbc9f7be

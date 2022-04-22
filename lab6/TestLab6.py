@@ -13,6 +13,9 @@ obj = hmac_hash()
 
 key_byt = obj.generation_key()
 
+print(int.from_bytes(key_byt, "big"))
+
+
 print("\nHMAC-SHA-256")
 print(hmac.new(key_byt, msg, digestmod=hashlib.sha256).hexdigest())
 print(obj.sha_(msg, key_byt, 256).hex())
@@ -28,3 +31,6 @@ print(obj.gost_stribog(msg, key_byt, 256).hex())
 print("\nHMAC-GOST R 34.11-2012 512")
 print(hmac.new(key_byt, msg, digestmod=gost34112012512).hexdigest())
 print(obj.gost_stribog(msg, key_byt, 512).hex())
+
+
+print(b"\x00".hex())

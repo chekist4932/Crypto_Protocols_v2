@@ -221,9 +221,9 @@ def __sha_512(bytes_msg: bytes):
 
 def sha_(bytes_msg: bytes, size: int):
     if size == 256:
-        __sha_256(bytes_msg)
+        return __sha_256(bytes_msg)
     elif size == 512:
-        __sha_512(bytes_msg)
+        return __sha_512(bytes_msg)
     else:
         raise ValueError("Incorrect size")
 

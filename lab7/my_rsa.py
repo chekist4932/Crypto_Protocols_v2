@@ -37,9 +37,6 @@ class RSA:
         if _key_byte_len > 2048:
             _key_byte_len = 2048
 
-        # y = math.log2(x)
-        # math.ceil( y / 8 )
-        #
         _block_len = _key_byte_len - 2
         _pad_bytes_size = math.ceil(math.log(_key_byte_len, 2) / 8)  # Нахожу размерность байтов для паддинга.
         # Округление в большую сторону кратность степени размера блока 8-ке
@@ -60,11 +57,11 @@ class RSA:
         return b"".join([x.to_bytes(math.ceil(math.log2(x) / 8), byteorder="big") for x in _encrypted_msg_blocks])
 
     @staticmethod
-    def decrypt(sec_key: list[int, int, int], encrypted_msg: bytes):
+    def decrypt(key: list[int, int], encrypted_msg: bytes):
 
         _msg_len_bytes = len(encrypted_msg)
         _key_byte_len = len(
-            (sec_key[0] * sec_key[1]).to_bytes(math.ceil(math.log2((sec_key[0] * sec_key[1])) / 8), byteorder="big"))
+            (key[0]).to_bytes(math.ceil(math.log2((key[0])) / 8), byteorder="big"))
 
         if _key_byte_len > 2048:
             _key_byte_len = 2048
@@ -75,7 +72,7 @@ class RSA:
                                  range(0, _msg_len_bytes, _key_byte_len)]
 
         _decrypted_msg = [x.to_bytes(_block_len, byteorder="big") for x in
-                          [pow(num, sec_key[2], sec_key[0] * sec_key[1]) for num in _encrypted_msg_blocks]]
+                          [pow(num, key[1], key[0]) for num in _encrypted_msg_blocks]]
 
         for _block_in_decrypted in range(len(_decrypted_msg)):
             _byte_check = _decrypted_msg[_block_in_decrypted][-1]
@@ -89,6 +86,81 @@ class RSA:
             else:
                 raise ValueError("Wrong key")
         return b"".join(_decrypted_msg)
+
+
+
+    def pkcs_8_12(self, secret_key: list[int], public_key: list[int], date):
+
+        pub_k = {"SubjectPublicKeyInfo": {"publicExponent": public_key[1], "N": public_key[0]},
+                 "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"}
+
+        q_rev = self.__EucAlg(secret_key[0], secret_key[1])[2]
+
+        sec_k = {'privateExponent': secret_key[2], 'prime1': secret_key[0], 'prime2': secret_key[1],
+                 'exponent1': secret_key[2] % (secret_key[0] - 1),
+                 'exponent2': secret_key[2] % (secret_key[1] - 1),
+                 'coefficient': q_rev }
+
+        file = open(f"results\\PubKey - {date}.json", "w")
+        json.dump(pub_k, file, indent=4)
+        file.close()
+
+        file = open(f"results\\SecKey - {date}.json", "w")
+        json.dump(sec_k, file, indent=4)
+        file.close()
+
+
+
+    @staticmethod
+    def PKCS_7_CAdES(msg, signature, hash_type, pub_key, mark):
+        signature_ = {"CMSVersion": "1", "DigestAlgorithmIdentifiers": hash_type,
+                      "EncapsulatedContentInfo": {"ContentType": "text", "OCTET STRING": msg},
+                      "CertificateSet": pub_key,
+                      "RevocationInfoChoises": "NULL",
+                      "SignerInfos":
+                          {"CMSVersion": "1", "SignerIdentifier": "Цой Георгий",
+                           "DigestAlgorithmIdentifier": hash_type,
+                           "SignedAttributes": "NULL",
+                           "SignatureAlgorithmIdentifier": "RSAdsi",
+                           "SignatureValue": signature,
+                           "UnsignedAttributes":
+                               {"OBJECT IDENTIFIER": "signature-time-stamp",
+                                "SET OF AttributeValue":
+                                    " "
+                                }
+                           }
+                      }
+        file = open(f"results\\Signature {mark}.json", "w", encoding="utf-8")
+        json.dump(signature_, file, indent=4)
+        file.close()
+        return signature_
+
+
+
+    @staticmethod
+    def read_out_file(path: str, mode: str):
+        try:
+            if mode == "msg":
+                with open(path, "r", encoding="utf-8") as file:
+                    result = file.read()
+            elif mode == "en_msg":
+                with open(path, "r", encoding="utf-8") as j_file:
+                    result = json.load(j_file)['EncryptedContentInfo']["encryptedContent"]
+            elif mode == "pb":
+                with open(path, "r", encoding="utf-8") as j_file:
+                    res = json.load(j_file)
+                    result = [res["SubjectPublicKeyInfo"]["N"], res["SubjectPublicKeyInfo"]["publicExponent"]]
+            elif mode == "sc":
+                with open(path, "r", encoding="utf-8") as j_file:
+                    res = json.load(j_file)
+                    result = [res["prime1"], res["prime2"], res["privateExponent"]]
+            else:
+                raise ValueError("Uncorrect mode")
+        except Exception as err:
+            raise err
+        else:
+            return result
+
 
     @staticmethod
     def __test_miller(flag: list):
@@ -162,57 +234,3 @@ class RSA:
             a = A[1]
             b = B[1]
         return nod, a, b
-
-    def pkcs_8_12(self, secret_key: list[int], public_key: list[int], date):
-
-        pub_k = {"SubjectPublicKeyInfo": {"publicExponent": public_key[1], "N": public_key[0]},
-                 "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"}
-
-        sec_k = {'privateExponent': secret_key[2], 'prime1': secret_key[0], 'prime2': secret_key[1],
-                 'exponent1': secret_key[2] % (secret_key[0] - 1),
-                 'exponent2': secret_key[2] % (secret_key[1] - 1),
-                 'coefficient': self.__EucAlg(secret_key[0], secret_key[1])[2]}
-
-        file = open(f"results\\PubKey - {date}.json", "w")
-        json.dump(pub_k, file, indent=4)
-        file.close()
-
-        file = open(f"results\\SecKey - {date}.json", "w")
-        json.dump(sec_k, file, indent=4)
-        file.close()
-
-    @staticmethod
-    def pkcs_7_bytes(encrypted_msg: bytes, date):
-        res = {"Version": 0,
-               "EncryptedContentInfo":
-                   {"ContentType": "text",
-                    "ContentEncryptionAlgorithmIdentifier": "rsaEncryption",
-                    "encryptedContent": encrypted_msg.hex(),
-                    "OPTIONAL": "NULL"}}
-        file = open(f"results\\EncMsg - {date}.json", "w")
-        json.dump(res, file, indent=4)
-        file.close()
-
-    @staticmethod
-    def read_out_file(path: str, mode: str):
-        try:
-            if mode == "msg":
-                with open(path, "r", encoding="utf-8") as file:
-                    result = file.read()
-            elif mode == "en_msg":
-                with open(path, "r", encoding="utf-8") as j_file:
-                    result = json.load(j_file)['EncryptedContentInfo']["encryptedContent"]
-            elif mode == "pb":
-                with open(path, "r", encoding="utf-8") as j_file:
-                    res = json.load(j_file)
-                    result = [res["SubjectPublicKeyInfo"]["N"], res["SubjectPublicKeyInfo"]["publicExponent"]]
-            elif mode == "sc":
-                with open(path, "r", encoding="utf-8") as j_file:
-                    res = json.load(j_file)
-                    result = [res["prime1"], res["prime2"], res["privateExponent"]]
-            else:
-                raise ValueError("Uncorrect mode")
-        except Exception as err:
-            raise err
-        else:
-            return result
