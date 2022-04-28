@@ -21,6 +21,18 @@ def check(SetOfAt: dict):
 
     return Elgamal.elgamal().check_signature(center_pub_key, center_signature, user_sign+tms)
 
+
+def show_res(res_dict: dict):
+    print(f"Hash type:\t{res_dict['DigestAlgorithmIdentifiers']}")
+    print(
+        f"Alg signature:\t{res_dict['SignerInfos']['SignatureAlgorithmIdentifier']}")
+    print(f"Author signature:\t{res_dict['SignerInfos']['SignerIdentifier']}")
+    print(
+        f"UTCTime:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['UTCTime']}")
+    print(
+        f"Time of center:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['GeneralizedTime']}")
+
+
 def path_getter(mode):
     while True:
         try:
@@ -82,9 +94,9 @@ def menu():
                 while True:
 
                     msg = open_file("msg")
-
                     pub_key = open_file("pb")
                     sec_key = open_file("sk")
+
                     while True:
                         hash_choice = input("Select hash alg:\n1.\tSHA\n2.\tGOST R 34.11-2012\n-\t")
                         size_choice = input("Select size:\n1.\t256\n2.\t512\n-\t")
@@ -93,7 +105,6 @@ def menu():
                         else:
                             print("Again.")
                             continue
-
                         if hash_choice == "1":
                             hash_msg = sha_256_512.sha_(msg, size_)
                             hash_type = "sha" + str(size_)
@@ -145,14 +156,7 @@ def menu():
                                 json.dump(res_dict, file, indent=4)
                                 file.close()
                                 print("Timestamp is CORRECT\n")
-                                print(f"Hash type:\t{res_dict['DigestAlgorithmIdentifiers']}")
-                                print(
-                                    f"Alg signature:\t{res_dict['SignerInfos']['SignatureAlgorithmIdentifier']}")
-                                print(f"Author signature:\t{res_dict['SignerInfos']['SignerIdentifier']}")
-                                print(
-                                    f"UTCTime:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['UTCTime']}")
-                                print(
-                                    f"Time of center:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['GeneralizedTime']}")
+                                show_res(res_dict)
                                 print("\n\033[36mSignature completed.\033[0m\n")
 
                             else:

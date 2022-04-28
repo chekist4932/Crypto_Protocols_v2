@@ -4,8 +4,11 @@ import math
 
 import json
 import datetime
+import timeit
+
 from sympy.ntheory import factorint, primerange
 from math import gcd
+import pyprimes
 
 
 class elgamal:
@@ -40,8 +43,8 @@ class elgamal:
             r = random.randint(1, p - 2)
             if gcd(r, p - 1) ^ 1 == 0:
                 gamma = pow(public_key["alpha"], r, p)
-                sigma = (hash_int - (secret_key["privateExponent"] * gamma))  #  % (p - 1)
-                sigma = pow(sigma * self.EucAlg(p - 1, r)[2], 1, p-1)
+                sigma = (hash_int - (secret_key["privateExponent"] * gamma))  # % (p - 1)
+                sigma = pow(sigma * self.EucAlg(p - 1, r)[2], 1, p - 1)
 
                 return {"gamma": gamma, "sigma": sigma}
 
@@ -61,8 +64,9 @@ class elgamal:
             return False
 
     def pkcs_8_12(self, secret_key: dict, public_key: dict, date):
-        pub_key = {"SubjectPublicKeyInfo": {"alpha": public_key["alpha"], "beta": public_key["beta"], "p": public_key["p"]},
-                      "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"}
+        pub_key = {
+            "SubjectPublicKeyInfo": {"alpha": public_key["alpha"], "beta": public_key["beta"], "p": public_key["p"]},
+            "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"}
         file = open(f"results\\PubKey - {date}.json", "w")
         json.dump(pub_key, file, indent=4)
         file.close()
@@ -75,8 +79,10 @@ class elgamal:
     def PKCS_7_CAdES(msg, signature, hash_type, public_key, mark):
         signature_ = {"CMSVersion": "1", "DigestAlgorithmIdentifiers": hash_type,
                       "EncapsulatedContentInfo": {"ContentType": "text", "OCTET STRING": msg},
-                      "CertificateSet": {"SubjectPublicKeyInfo": {"alpha": public_key["alpha"], "beta": public_key["beta"], "p": public_key["p"]},
-                      "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"},
+                      "CertificateSet": {
+                          "SubjectPublicKeyInfo": {"alpha": public_key["alpha"], "beta": public_key["beta"],
+                                                   "p": public_key["p"]},
+                          "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"},
                       "RevocationInfoChoises": "NULL",
                       "SignerInfos":
                           {"CMSVersion": "1", "SignerIdentifier": "Цой Георгий",
@@ -210,8 +216,60 @@ class elgamal:
             flag = True
             if gcd(prime_mod, maybe_parent) ^ 1 == 0 and pow(maybe_parent, (prime_mod - 1) // 2, prime_mod) ^ 1 != 0:
                 for prime in list(factorint(prime_mod - 1).keys()):
+                # for prime in pyprimes.factorise(prime_mod - 1):
                     if pow(maybe_parent, (prime_mod - 1) // prime, prime_mod) ^ 1 == 0:
                         flag = False
                         break
                 if flag:
-                    return maybe_parent
+                    log_parent = int(math.log(prime_mod, maybe_parent))
+                    # print(f"log parent - {log_parent}")
+                    print(maybe_parent)
+                    while True:
+                        random_power = random.randint(log_parent // 2, log_parent)
+                        if gcd(random_power, prime_mod - 1) ^ 1 == 0:
+                            break
+                    # print(f"random pow - {random_power}")
+                    new_parent = maybe_parent ** random_power
+                    # print(f"new parent - {new_parent}")
+                    return new_parent
+
+
+# for i in range(1):
+#     obj = elgamal()
+#
+#     # p = obj.PrimeNum(256, 100)o
+#     prime = obj.PrimeNum(12, 100)
+#     print(f"prime - {prime}")
+#     parent = obj.gen_parent_element(prime)
+#     print(f"parent - {parent}")
+#     log_parent = int(math.log(prime, parent))
+#     print(f"log parent - {log_parent}")
+#     while True:
+#         random_power = random.randint(log_parent//2, log_parent)
+#         if gcd(random_power, prime-1) ^ 1 == 0:
+#             break
+#     print(f"random pow - {random_power}")
+#     new_parent = parent**random_power
+#     print(f"new parent - {new_parent}")
+#     list_ex = [num for num in range(1, prime)]
+#     list_check = []
+#     for num in range(prime):
+#         list_check.append(pow(new_parent,num,prime))
+#     list_check = list(set(list_check))
+#     list_check.sort()
+#     # print(list_ex)
+#     # print(list_check)
+#     print("\t\t\t",list_ex == list_check)
+
+
+obj = elgamal()
+
+prime = obj.PrimeNum(256, 100)
+print(prime)
+print(obj.gen_parent_element(prime))
+# print(prime)
+# # print(timeit.timeit(lambda : factorint(prime-1), number= 1))
+# print(timeit.timeit(lambda: pyprimes.factorise(prime - 1), number=1))
+# for division in pyprimes.factorise(prime - 1):
+#     print(division[0])
+# print(f"RESULT CHECK  - {obj.gen_parent_element(prime)}")
