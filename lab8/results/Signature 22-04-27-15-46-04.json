@@ -1,0 +1,34 @@
+{
+    "CMSVersion": "1",
+    "DigestAlgorithmIdentifiers": "sha256",
+    "EncapsulatedContentInfo": {
+        "ContentType": "text",
+        "OCTET STRING": "d098d0bed181d0b8d18420d091d180d0bed0b4d181f0bad0b8d0b90a0ad09ed0b4d0b8d0bdd0bed187d0b5d181d182d0b2d0be0a0ad09ad0bed0b3d0b4d0b020d182d0b5d180d18fd0b5d18220d180d0b0d0b2d0bdd0bed0b2d0b5d181d0b8d0b50ad182d0b2d0bed19120d181d0bed0b7d0bdd0b0d0bdd0b8d0b520d183d181d182d0b0d0bbd0bed0b52c0ad0bad0bed0b3d0b4d0b020d181d182d183d0bfd0b5d0bdd18cd0bad0b820d18dd182d0bed0b920d0bbd0b5d181d182d0bdd0b8d186d18b0ad183d185d0bed0b4d18fd18220d0b8d0b72dd0bfd0bed0b420d0bdd0bed0b32c0ad0bad0b0d0ba20d0bfd0b0d0bbd183d0b1d0b02c0ad0bad0bed0b3d0b4d0b020d0bfd0bbd18ed191d18220d0bdd0b020d187d0b5d0bbd0bed0b2d0b5d187d0b5d181d182d0b2d0be0ad182d0b2d0bed19120d0bdd0bed187d0bdd0bed0b520d0bed0b4d0b8d0bdd0bed187d0b5d181d182d0b2d0be2c20e280940ad182d18b20d0bcd0bed0b6d0b5d188d18c0ad180d0b0d0b7d0bcd18bd188d0bbd18fd182d18c20d0be20d0b2d0b5d187d0bdd0bed181d182d0b80ad0b820d181d0bed0bcd0bdd0b5d0b2d0b0d182d18cd181d18f20d0b220d0bdd0b5d0bfd0bed180d0bed187d0bdd0bed181d182d0b80ad0b8d0b4d0b5d0b92c20d0b3d0b8d0bfd0bed182d0b5d0b72c20d0b2d0bed181d0bfd180d0b8d18fd182d0b8d18f0ad0bfd180d0bed0b8d0b7d0b2d0b5d0b4d0b5d0bdd0b8d18f20d0b8d181d0bad183d181d181d182d0b2d0b02c0ad0b820e2809420d0bad181d182d0b0d182d0b820e2809420d181d0b0d0bcd0bed0b3d0be20d0b7d0b0d187d0b0d182d0b8d18f0ad09cd0b0d0b4d0bed0bdd0bdd0bed0b920d181d18bd0bdd0b020d098d0b8d181d183d181d0b02e0ad09dd0be20d0bbd183d187d188d0b520d0bfd0bed0bad0bbd0bed0bdd18fd182d18cd181d18f20d0b4d0b0d0bdd0bdd0bed181d182d0b80ad18120d0b3d0bbd183d0b1d0bed0bad0b8d0bcd0b820d0b5d19120d0bcd0bed0b3d0b8d0bbd0b0d0bcd0b82c0ad0bad0bed182d0bed180d18bd0b520d0bfd0bed182d0bed0bc2c0ad0b7d0b020d0b4d0b0d0b2d0bdd0bed181d182d18cd18e2c0ad0bfd0bed0bad0b0d0b6d183d182d181d18f20d182d0b0d0bad0b8d0bcd0b820d0bcd0b8d0bbd18bd0bcd0b82e0a0ad094d0b02e0ad09bd183d187d188d0b520d0bfd0bed0bad0bbd0bed0bdd18fd182d18cd181d18f20d0b4d0b0d0bdd0bdd0bed181d182d0b80ad18120d0bad0bed180d0bed182d0bad0b8d0bcd0b820d0b5d19120d0b4d0bed180d0bed0b3d0b0d0bcd0b82c0ad0bad0bed182d0bed180d18bd0b520d0bfd0bed182d0bed0bc0ad0b4d0be20d181d182d180d0b0d0bdd0bdd0bed181d182d0b80ad0bfd0bed0bad0b0d0b6d183d182d181d18f20d182d0b5d0b1d0b50ad188d0b8d180d0bed0bad0b8d0bcd0b82c0ad0bfd0bed0bad0b0d0b6d183d182d181d18f20d0b1d0bed0bbd18cd188d0b8d0bcd0b82c0ad0bfd18bd0bbd18cd0bdd18bd0bcd0b82c0ad183d181d0b5d18fd0bdd0bdd18bd0bcd0b820d0bad0bed0bcd0bfd180d0bed0bcd0b8d181d181d0b0d0bcd0b82c0ad0bfd0bed0bad0b0d0b6d183d182d181d18f20d0b1d0bed0bbd18cd188d0b8d0bcd0b820d0bad180d18bd0bbd18cd18fd0bcd0b82c0ad0bfd0bed0bad0b0d0b6d183d182d181d18f20d0b1d0bed0bbd18cd188d0b8d0bcd0b820d0bfd182d0b8d186d0b0d0bcd0b82e0a0ad094d0b02e20d09bd183d187d188d0b520d0bfd0bed0bad0bbd0bed0bdd18fd182d18cd181d18f20d0b4d0b0d0bdd0bdd0bed181d182d0b80ad18120d183d0b1d0bed0b3d0b8d0bcd0b820d0b5d19120d0bcd0b5d180d0b8d0bbd0b0d0bcd0b82c0ad0bad0bed182d0bed180d18bd0b520d0bfd0bed182d0bed0bc20d0b4d0be20d0bad180d0b0d0b9d0bdd0bed181d182d0b82c0ad0bfd0bed181d0bbd183d0b6d0b0d18220d0b4d0bbd18f20d182d0b5d0b1d18f20d0bfd0b5d180d0b8d0bbd0b0d0bcd0b80a28d185d0bed182d18f20d0b820d0bdd0b520d0bed181d0bed0b1d0be20d187d0b8d181d182d18bd0bcd0b8292c0ad183d0b4d0b5d180d0b6d0b8d0b2d0b0d18ed189d0b8d0bcd0b820d0b220d180d0b0d0b2d0bdd0bed0b2d0b5d181d0b8d0b80ad182d0b2d0bed0b820d185d180d0bed0bcd0b0d18ed189d0b8d0b520d0b8d181d182d0b8d0bdd18b0ad0bdd0b020d18dd182d0bed0b920d0b2d18bd189d0b5d180d0b1d0bbd0b5d0bdd0bdd0bed0b920d0bbd0b5d181d182d0bdd0b8d186d0b52e0a0a3139353920d0b32e"
+    },
+    "CertificateSet": {
+        "SubjectPublicKeyInfo": {
+            "alpha": 53,
+            "beta": 33741707585496463072881435310248097255098560528177644237753388381719625358824,
+            "p": 77932335095354086383863669729020345703218832215672247704334464041301918837351
+        },
+        "PKCS10CertRequest": "NULL",
+        "Certificate": "NULL",
+        "PKCS7CertChain-PKCS": "NULL"
+    },
+    "RevocationInfoChoises": "NULL",
+    "SignerInfos": {
+        "CMSVersion": "1",
+        "SignerIdentifier": "\u0426\u043e\u0439 \u0413\u0435\u043e\u0440\u0433\u0438\u0439",
+        "DigestAlgorithmIdentifier": "sha256",
+        "SignedAttributes": "NULL",
+        "SignatureAlgorithmIdentifier": "ELGAMALdsi",
+        "SignatureValue": {
+            "gamma": 4306969512413813409700682485724213449031040821304033084320666193928227014421,
+            "sigma": 24551953336128728508407860921518220066138888335385788154743628619358290112569
+        },
+        "UnsignedAttributes": {
+            "OBJECT IDENTIFIER": "signature-time-stamp",
+            "SET OF AttributeValue": " "
+        }
+    }
+}
