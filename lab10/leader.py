@@ -10,13 +10,21 @@ from datetime import datetime
 from math import ceil, log2
 
 import GOST_R_34_12_2012
-from gen_param import RsaKeys
+import client_TimeStampCentre
+import my_rsa
+from gen_param import under_group_params, prime_num, gen_parent_element, generation_prime_p_and_prime_q
+
+insertion = "\033[36m[+]\033[0m"
+users = {"user_1": {"ip": "localhost", "port": 50500}, "user_2": {"ip": "localhost", "port": 50555}}
+hash_type = "GOST512"
+
 
 def client_decor(users: dict, send_file: dict):
     answers_dict = {}
     for user_name in users:
         answers_dict[user_name] = client_2(users[user_name], send_file[user_name])["answer"]
     return answers_dict
+
 
 def client_2(user: dict, send_file: dict):
     answers_dict = {}
@@ -48,52 +56,71 @@ def client_2(user: dict, send_file: dict):
     return answers_dict
 
 
-
-def p_q_generating():
-    flag = True
-    q = 0
-    k = 0
-    prime_mod = 0
-    while flag:
-        prime_mod = RsaKeys().prime_num(1024)
-        time_mark = time.time()
-        for maybe_q in primerange(547, (prime_mod - 1) // 2):
-            if round(time.time() - time_mark) > 1:
-                break
-            if (prime_mod - 1) % maybe_q == 0:
-                q = maybe_q
-                k = (prime_mod - 1) // q
-                flag = False
-                break
-    return prime_mod, q, k
-
-
 def int_to_bytes(num: int) -> bytes:
     return num.to_bytes(ceil(log2(num) / 8), "big")
 
 
+def check(SetOfAt: dict):
+    user_sign = SetOfAt["UserSignature"]
+    tms = json.dumps(SetOfAt["Timestamp"]).encode()
 
-msg = "Hello, World!".encode()
+    enc_center_signature = SetOfAt["CenterSignature"]
+
+    center_pub_key = [SetOfAt["CenterSubjectPublicKeyInfo"]["SubjectPublicKeyInfo"]["N"],
+                      SetOfAt["CenterSubjectPublicKeyInfo"]["SubjectPublicKeyInfo"]["publicExponent"]
+                      ]
+
+    decrypt_center_signature = my_rsa.RSA().decrypt(center_pub_key, bytes.fromhex(enc_center_signature))
+
+    if decrypt_center_signature.hex() == (user_sign + tms.hex()):
+        return True
+    else:
+        return False
+
+
+def path_getter():
+    while True:
+        try:
+            path = input(f"{insertion} Input path to message: ")
+            file = open(path)
+        except Exception as err:
+            print(f"{insertion} Incorrect path. {err}.")
+            continue
+        else:
+            file.close()
+            return path
+
+
+def open_file() -> bytes:
+    while True:
+        path = path_getter()
+        try:
+            msg = open(path, "r", encoding="utf-8").read().encode("utf-8")
+        except Exception as err:
+            print(f"{insertion} Input error. Try again!. {err}")
+            continue
+        else:
+            return msg
+
+msg = open_file()
+
+print(f"{insertion} Process started.")
+
+# msg = "Hello, World!".encode()
+
 send_data = {}
-# users = {"user_1": {"ip": "localhost", "port": 50500}, "user_2": {"ip": "localhost", "port": 50555}}
-users = {"user_1": {"ip": "localhost", "port": 50500}}
-print(f"Users:\t{users}")
 
-prime_p, prime_q, k = p_q_generating()
-parent = RsaKeys().gen_parent_element(prime_p)
-n_mod, public_exp, secret_d = RsaKeys().under_group_params(512)
+prime_p, prime_q, k = generation_prime_p_and_prime_q()
+parent = gen_parent_element(prime_p)
+n_mod, public_exp, secret_d = under_group_params(512)
 alpha = pow(parent, k, prime_p)
-z_param = RsaKeys().prime_num(1024)
-print(f"p - {prime_p}")
-print(f"q - {prime_q} || k = {k}")
+z_param = prime_num(1024)
 
-print(f"Parent - {parent}")
-print(f"Alpha - {alpha}")
+print(f"{insertion} Group params generated.")
 
 for user_name in users:
     send_data[user_name] = {"mark": "first", "prime_p": prime_p, "prime_q": prime_q, "alpha": alpha}
 
-# user_pub_res = client(users, send_data)
 user_pub_res = client_decor(users, send_data)
 
 hash_msg = GOST_R_34_12_2012.GOST_34_11_2012(msg, 512).hash_()
@@ -109,26 +136,18 @@ for user_name in users:
     users[user_name]["lambda"] = lambda_
     send_data[user_name] = {"mark": "two", "lambda": lambda_}
 universe %= prime_p
-print(send_data)
-# r_param_res = client(users, send_data)
+
 r_param_res = client_decor(users, send_data)
-
-leader_t = random.randint(2, prime_q-1)
-
+leader_t = random.randint(2, prime_q - 1)
 leader_r_param = pow(alpha, leader_t, prime_p)
 R_universe = leader_r_param
 for user_name in users:
     users[user_name]["R"] = r_param_res[user_name]
     R_universe *= users[user_name]["R"]
-
 R_universe %= prime_p
 
-
 E_param = GOST_R_34_12_2012.GOST_34_11_2012(msg + int_to_bytes(R_universe) + int_to_bytes(universe), 512).hash_()
-
 E_param = int.from_bytes(E_param, "big")
-
-print(f"E - {E_param}")
 
 for user_name in users:
     send_data[user_name] = {"mark": "three", "E": E_param}
@@ -136,39 +155,77 @@ for user_name in users:
 s_param_res = client_decor(users, send_data)
 S_universe = 0
 lead_s = leader_t + pow((E_param * z_param), 1, prime_q)
-S_universe = lead_s
-print(f"S lead - {S_universe}")
+S_universe += lead_s
+
+correct_mark = 0
 for user_name in users:
     users[user_name]["S"] = s_param_res[user_name]
-    print(f"users - {users}")
     my_pow = pow(users[user_name]["lambda"] * E_param * -1, 1, prime_q)
-    step_one = pow(users[user_name]["public"], my_pow, prime_p)  # users[user_name]["R"] ==
+    step_one = pow(users[user_name]["public"], my_pow, prime_p)
     step_two = pow(alpha, users[user_name]["S"], prime_p)
     finally_step = (step_one * step_two) % prime_p
 
     if users[user_name]["R"] == finally_step:
-        print("!!!!!!!!!Right!!!!!!!!!!!!!")
         S_universe += users[user_name]["S"]
-        print(S_universe)
-
+        correct_mark += 1
 S_universe %= prime_q
 
-sign = {"U": universe, "E": E_param, "S": S_universe}
+if correct_mark == len(users):
+    print(f"{insertion} Signature created successfully.")
 
-print(sign)
+    time_mark = str(datetime.now())[2:-7].replace(" ", "-").replace(":", "-")
+    sign = {"U": universe, "E": E_param, "S": S_universe}
+    L_key = pow(alpha, z_param, prime_p)
+    signature_ = {"CMSVersion": "1",
+                  "DigestAlgorithmIdentifiers": hash_type,
+                  "EncapsulatedContentInfo": {"ContentType": "text", "OCTET STRING": msg.decode()},
+                  "CertificateSet": {
+                      "SubjectPublicKeyInfo": {"publicExponent": L_key, "prime_p": prime_p, "prime_q": prime_q,
+                                               "alpha": alpha},
+                      "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"
+                  },
+                  "RevocationInfoChoises": "NULL",
+                  "SignerInfos":
+                      {"CMSVersion": "1",
+                       "SignerIdentifier": "Цой Георгий",
+                       "DigestAlgorithmIdentifier": hash_type,
+                       "SignedAttributes": "NULL",
+                       "SignatureAlgorithmIdentifier": "GROUPdsi",
+                       "SignatureValue": sign,
+                       "UnsignedAttributes":
+                           {"OBJECT IDENTIFIER": "signature-time-stamp",
+                            "SET OF AttributeValue":
+                                " "
+                            }
+                       }
+                  }
+    file = open(f"results\\Signature {time_mark}.json", "w", encoding="utf-8")
+    json.dump(signature_, file, indent=4)
+    file.close()
+    file_to_TimeStampCentre = json.load(open(f"results\\Signature {time_mark}.json", "r", encoding="utf-8"))
+    input(f"{insertion} Send to the TimeStampCentre. For start press any key.")
+    SetOfAttr = json.loads(client_TimeStampCentre.client(file_to_TimeStampCentre).decode())
 
-L_key = pow(alpha, z_param, prime_p)
-
-mp_pow = pow((-1)*E_param, 1, prime_q)
-
-step_one = pow(universe * L_key, mp_pow, prime_p)
-step_two = pow(alpha, S_universe, prime_p)
-R_under = (step_one * step_two) % prime_p
-E_under = GOST_R_34_12_2012.GOST_34_11_2012(msg + int_to_bytes(R_under) + int_to_bytes(universe), 512).hash_()
-E_under = int.from_bytes(E_under, "big")
-print(E_under == E_param)
-print(R_under == R_universe)
-
-
-# with open("file_test.json") as f:
-#     client(json.load(f), users)
+    if type(SetOfAttr) is dict and check(SetOfAttr):
+        file = open(f"results\\Signature {time_mark}.json", "r", encoding="utf-8")
+        res_dict = json.load(file)
+        file.close()
+        file = open(f"results\\Signature {time_mark}.json", "w", encoding="utf-8")
+        res_dict["SignerInfos"]["UnsignedAttributes"][
+            "SET OF AttributeValue"] = SetOfAttr
+        json.dump(res_dict, file, indent=4)
+        file.close()
+        print(f"{insertion} Timestamp is correct.")
+        print(f"{insertion} Hash type:\t{res_dict['DigestAlgorithmIdentifiers']}")
+        print(
+            f"{insertion} Alg signature:\t{res_dict['SignerInfos']['SignatureAlgorithmIdentifier']}")
+        print(f"{insertion} Author signature:\t{res_dict['SignerInfos']['SignerIdentifier']}")
+        print(
+            f"{insertion} UTCTime:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['UTCTime']}")
+        print(
+            f"{insertion} Time of center:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['GeneralizedTime']}")
+        print(f"{insertion} Process done.")
+    else:
+        print(f"{insertion} Error in TimeStampCentre: {SetOfAttr.decode()}")
+else:
+    print(f"{insertion} Error creating signature.")
