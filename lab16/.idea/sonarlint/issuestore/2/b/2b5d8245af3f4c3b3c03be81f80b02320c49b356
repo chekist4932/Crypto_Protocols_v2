@@ -1,0 +1,7 @@
+
+fpython:S1542G"IRename function "Maj" to match the regular expression ^[a-z_][a-z0-9_]*$.(Žžé¡øÿÿÿÿ
+epython:S1542K"MRename function "E_0_256" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÆÏ™Š
+jpython:S1542O"MRename function "E_0_512" to match the regular expression ^[a-z_][a-z0-9_]*$.(¢çÚÿÿÿÿÿ
+jpython:S1542S"MRename function "E_1_256" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÌˆõÃøÿÿÿÿ
+jpython:S1542W"MRename function "E_1_512" to match the regular expression ^[a-z_][a-z0-9_]*$.(Â»ÚÄøÿÿÿÿ
+>python:S1481ˆ"%Remove the unused local variable "j".(Ë¶ÙŠ
