@@ -1,9 +1,0 @@
-{
-    "Version": 0,
-    "EncryptedContentInfo": {
-        "ContentType": "text",
-        "ContentEncryptionAlgorithmIdentifier": "rsaEncryption",
-        "encryptedContent": "0952c3efc08d8078d52d7087fda75341020647330b5390175f09adba313a7a0afad09264f3baa1aeb40d77768f83b60997eacb4d811dcf6b2ec1f9e35515d701556e4ed34574b022219ba73d1e5976add5f0709a7850b929ca4e9d4e5588d12b7fc5a91deee6f9f6a5a186796f523f1c3bc4828998d69fb73c3ea826e5f4f26a",
-        "OPTIONAL": "NULL"
-    }
-}

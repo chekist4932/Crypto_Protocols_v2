@@ -12,6 +12,7 @@ def client(send_file: dict):
     client_sock.connect(("192.168.33.129", 50500))
     # 10.0.147.102
     # 192.168.33.129
+    #
     res = b""
 
     dd = [json.dumps(send_file).encode()[x:x + 1024] for x in range(0, len(json.dumps(send_file).encode()), 1024)]
@@ -35,8 +36,3 @@ def client(send_file: dict):
     return res
 
 
-"""
-with open("results/Signature 22-04-21-22-16-45.json") as f:
-    sign = json.load(f)
-
-print(client(sign))"""

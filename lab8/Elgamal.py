@@ -6,7 +6,7 @@ import json
 import datetime
 import timeit
 
-from sympy.ntheory import factorint, primerange
+from sympy.ntheory import factorint, primerange, isprime
 from math import gcd
 import pyprimes
 
@@ -212,9 +212,9 @@ class elgamal:
         return numb_list
 
     def gen_parent_element(self, prime_mod):
-        for maybe_parent in primerange(2, prime_mod):
+        for maybe_parent in range(2, prime_mod):
             flag = True
-            if gcd(prime_mod, maybe_parent) ^ 1 == 0 and pow(maybe_parent, (prime_mod - 1) // 2, prime_mod) ^ 1 != 0:
+            if pow(maybe_parent, (prime_mod - 1) // 2, prime_mod) ^ 1 != 0:
                 for prime in list(factorint(prime_mod - 1).keys()):
                 # for prime in pyprimes.factorise(prime_mod - 1):
                     if pow(maybe_parent, (prime_mod - 1) // prime, prime_mod) ^ 1 == 0:
@@ -263,13 +263,34 @@ class elgamal:
 
 
 obj = elgamal()
-
-prime = obj.PrimeNum(256, 100)
-print(prime)
-print(obj.gen_parent_element(prime))
+#
+# prime = obj.PrimeNum(16, 100)
+# print(f"Prime - {prime}")
+# print(f"Is prime? - {isprime(prime)}")
+# parent = obj.PrimeNum(8,100)
+# print(f"Parent - {parent}")
+# print(f"Is prime? - {isprime(parent)}")
+# list_ex = [num for num in range(1, prime)]
+# list_check = []
+# for num in range(prime):
+#     list_check.append(pow(parent,num,prime))
+# list_check = list(set(list_check))
+# list_check.sort()
+# # print(list_ex)
+# # print(list_check)
+# print(f"Len is example - {len(list_ex)}")
+# print(f"Len my result - {len(list_check)}")
+# print("\t\t\t",list_ex == list_check)
+# if not list_ex == list_check:
+#
+#     pass
+p1 = obj.PrimeNum(256,100)
+print(p1)
+print(obj.gen_parent_element(p1))
 # print(prime)
 # # print(timeit.timeit(lambda : factorint(prime-1), number= 1))
 # print(timeit.timeit(lambda: pyprimes.factorise(prime - 1), number=1))
 # for division in pyprimes.factorise(prime - 1):
 #     print(division[0])
 # print(f"RESULT CHECK  - {obj.gen_parent_element(prime)}")
+print(pow(6, 87058861811474967159212354848651099066670359079678693517184707706407782575811-1, 87058861811474967159212354848651099066670359079678693517184707706407782575811))

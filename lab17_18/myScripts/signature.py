@@ -1,14 +1,10 @@
 # Меню лабораторной работы №3. "Реализация RSA согласно стандартов PKCS 7, PKCS 8, PKCS 12".
 import json
 import logging
-import math
 from datetime import datetime
 
-from myScripts.sha_ import sha_256_512
-from myScripts.gost_stribog import gost_256_512
 from myScripts.my_rsa import RSA
 from myScripts.text_tags import Tag
-from myScripts.client import client
 
 
 def check(set_of_attr: dict):

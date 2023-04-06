@@ -40,12 +40,25 @@ def path_getter(mode):
             return path
 
 
+def open_file(mode: str):
+    while True:
+        path_msg = path_getter("msg")
+        try:
+            msg = my_rsa.RSA().read_out_file(path_msg, "msg").encode("utf-8")
+        except Exception as err:
+            print(f"Input error. Try again!. {err}")
+            continue
+        else:
+            return msg
+    pass
+
+
 def menu():
     while True:
         # date = str(datetime.datetime.now())[:-7].replace(":", "-")
         try:
             choose = int(
-                input("\n1.\tGeneration pair (secret,public) keys.\n2.\tSignature.\n3.\tDecrypt.\n4.\tExit.\n-\t"))
+                input("\n1.\tGeneration pair (secret,public) keys.\n2.\tSignature.\n3.\tExit.\n-\t"))
         except Exception:
             print("Input error. Try again!")
             continue
@@ -72,138 +85,93 @@ def menu():
                 cr.pkcs_8_12(sec, pub, cr.data)
                 print("\n\033[36mKey pair generated.\033[0m\n")
             elif choose == 2:  # encryption
-
                 while True:
-                    path_msg = path_getter("msg")
+
+                    msg = open_file("msg")
+                    pub_key = open_file("pb")
+                    sec_key = open_file("sk")
+                    pkcs_pub_key = {"SubjectPublicKeyInfo": {"publicExponent": pub_key[1], "N": pub_key[0]},
+                             "PKCS10CertRequest": "NULL", "Certificate": "NULL", "PKCS7CertChain-PKCS": "NULL"}
+
+                    while True:
+                        hash_choice = input("Select hash alg:\n1.\tSHA\n2.\tGOST R 34.11-2012\n-\t")
+                        size_choice = input("Select size:\n1.\t256\n2.\t512\n-\t")
+                        if size_choice == "1" or size_choice == '2':
+                            size_ = (256 if size_choice == "1" else 512)
+                        else:
+                            print("Again.")
+                            continue
+
+                        if hash_choice == "1":
+                            hash_msg = sha_256_512.sha_(msg, size_)
+                            hash_type = "sha" + str(size_)
+                            break
+                        elif hash_choice == "2":
+                            hash_msg = GOST_R_34_12_2012.GOST_34_11_2012(msg, size_).hash_()
+                            hash_type = "GOST" + str(size_)
+                            break
+                        else:
+                            print("Again.")
+                            continue
+
+                    print("\n\033[36mSignature in progress.\033[0m\n")
                     try:
-                        msg = my_rsa.RSA().read_out_file(path_msg, "msg").encode("utf-8")
-                    except Exception as err:
+                        user_signature = my_rsa.RSA().encrypt([sec_key[0] * sec_key[1], sec_key[2]],
+                                                              hash_msg)
+                    except ValueError as err:
                         print(f"Input error. Try again!. {err}")
                         continue
                     else:
+                        # ЗАПИСЬ ПО PKCS 7
+                        time_mark = str(datetime.now())[2:-7].replace("-", "-").replace(" ",
+                                                                                        "-").replace(
+                            ":", "-")
+                        sign_dict = my_rsa.RSA().PKCS_7_CAdES(msg.hex(), user_signature.hex(),
+                                                              hash_type, pkcs_pub_key, time_mark)
 
-                        while True:
-                            hash_choice = input("Select hash alg:\n1.\tSHA\n2.\tGOST R 34.11-2012\n-\t")
-                            size_choice = input("Select size:\n1.\t256\n2.\t512\n-\t")
-                            if size_choice == "1" or size_choice == '2':
-                                size_ = (256 if size_choice == "1" else 512)
+                        input("Enter for send to Time Stamp Center\n-\t")
+
+                        with open(f"results\\Signature {time_mark}.json", "r", encoding="utf-8") as jf:
+                            sign_dict = json.load(jf)
+
+                        if lab7_client.client(sign_dict) == False:
+                            print("Error in Time Stamp Center")
+                            break
+                        else:
+                            res_time_center = lab7_client.client(sign_dict)
+                            SetOfAttr = json.loads(res_time_center.decode())
+                            flag_check = check(SetOfAttr)
+                            if flag_check == True:
+
+                                file = open(f"results\\Signature {time_mark}.json", "r", encoding="utf-8")
+                                res_dict = json.load(file)
+                                file.close()
+                                file = open(f"results\\Signature {time_mark}.json", "w", encoding="utf-8")
+                                res_dict["SignerInfos"]["UnsignedAttributes"][
+                                    "SET OF AttributeValue"] = SetOfAttr
+                                json.dump(res_dict, file, indent=4)
+                                file.close()
+                                print("Timestamp is CORRECT\n")
+                                print(f"Hash type:\t{res_dict['DigestAlgorithmIdentifiers']}")
+                                print(
+                                    f"Alg signature:\t{res_dict['SignerInfos']['SignatureAlgorithmIdentifier']}")
+                                print(f"Author signature:\t{res_dict['SignerInfos']['SignerIdentifier']}")
+                                print(
+                                    f"UTCTime:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['UTCTime']}")
+                                print(
+                                    f"Time of center:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['GeneralizedTime']}")
+                                print("\n\033[36mSignature completed.\033[0m\n")
+
                             else:
-                                print("Again.")
-                                continue
+                                print("Error in Time Stamp Center")
+                            break
 
-                            if hash_choice == "1":
-                                hash_msg = sha_256_512.sha_(msg, size_)
-                                hash_type = "sha" + str(size_)
-                                break
-                            elif hash_choice == "2":
-                                hash_msg = GOST_R_34_12_2012.GOST_34_11_2012(msg, size_).hash_()
-                                hash_type = "GOST" + str(size_)
-                                break
-                            else:
-                                print("Again.")
-                                continue
-
-                        while True:
-                            path = path_getter("public key")
-                            try:
-                                pub_key = my_rsa.RSA().read_out_file(path, "pb")
-                                with open(path) as pkcs:
-                                    pkcs_pub_key = json.load(pkcs)
-                            except Exception as err:
-                                print(f"Input error. Try again!. {err}")
-                                continue
-                            else:
-                                path = path_getter("secret key")
-                                try:
-                                    sec_key = my_rsa.RSA().read_out_file(path, "sc")
-                                except Exception as err:
-                                    print(f"Input error. Try again!. {err}")
-                                    continue
-                                else:
-                                    print("\n\033[36mSignature in progress.\033[0m\n")
-                                    try:
-                                        user_signature = my_rsa.RSA().encrypt([sec_key[0] * sec_key[1], sec_key[2]],
-                                                                              hash_msg)
-                                    except ValueError as err:
-                                        print(f"Input error. Try again!. {err}")
-                                        continue
-                                    else:
-                                        # ЗАПИСЬ ПО PKCS 7
-                                        time_mark = str(datetime.now())[2:-7].replace("-", "-").replace(" ",
-                                                                                                        "-").replace(
-                                            ":", "-")
-                                        sign_dict = my_rsa.RSA().PKCS_7_CAdES(msg.hex(), user_signature.hex(),
-                                                                              hash_type, pkcs_pub_key, time_mark)
-
-                                        input("Enter for send to Time Stamp Center\n-\t")
-
-
-                                        with open(f"results\\Signature {time_mark}.json", "r", encoding="utf-8") as jf:
-                                            sign_dict = json.load(jf)
-
-                                        if lab7_client.client(sign_dict) == False:
-                                            print("Error in Time Stamp Center")
-                                            break
-                                        else:
-                                            res_time_center = lab7_client.client(sign_dict)
-                                        SetOfAttr = json.loads(res_time_center.decode())
-                                        flag_check = check(SetOfAttr)
-                                        if flag_check == True:
-
-                                            file = open(f"results\\Signature {time_mark}.json", "r", encoding="utf-8")
-                                            res_dict = json.load(file)
-                                            file.close()
-                                            file = open(f"results\\Signature {time_mark}.json", "w", encoding="utf-8")
-                                            res_dict["SignerInfos"]["UnsignedAttributes"][
-                                                "SET OF AttributeValue"] = SetOfAttr
-                                            json.dump(res_dict, file, indent=4)
-                                            file.close()
-                                            print("Timestamp is CORRECT\n")
-                                            print(f"Hash type:\t{res_dict['DigestAlgorithmIdentifiers']}")
-                                            print(
-                                                f"Alg signature:\t{res_dict['SignerInfos']['SignatureAlgorithmIdentifier']}")
-                                            print(f"Author signature:\t{res_dict['SignerInfos']['SignerIdentifier']}")
-                                            print(
-                                                f"UTCTime:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['UTCTime']}")
-                                            print(
-                                                f"Time of center:\t{res_dict['SignerInfos']['UnsignedAttributes']['SET OF AttributeValue']['Timestamp']['GeneralizedTime']}")
-                                            print("\n\033[36mSignature completed.\033[0m\n")
-
-                                        else:
-                                            print("Error in Time Stamp Center")
-                                        break
-                        break
-
-                pass
-            elif choose == 3:  # decryption
-                while True:
-                    path_encr = path_getter("encrypted msg")
-                    try:
-                        encr = bytes.fromhex(my_rsa.RSA().read_out_file(path_encr, "en_msg"))
-                    except Exception as err:
-                        print(f"Input error. Try again!. {err}")
-                        continue
-                    else:
-                        while True:
-                            path_sc = path_getter("secret key")
-                            try:
-                                sec_key = my_rsa.RSA().read_out_file(path_sc, "sc")
-                            except Exception as err:
-                                print(f"Input error. Try again!. {err}")
-                                continue
-                            else:
-                                print("\nDecryption in progress\n")
-                                decrypted_msg = my_rsa.RSA().decrypt(sec_key, encr)
-                                print("\n\033[36mEncryption completed.\033[0m\n")
-                                print(decrypted_msg.decode("utf-8"))
-                                with open(f"results\\DecMsg - {my_rsa.RSA().data}.txt", "w", encoding="utf-8") as file:
-                                    file.write(decrypted_msg.decode("utf-8"))
-                                break
-                    break
-
-                pass
-            elif choose == 4:  # exit
+            elif choose == 3:  # exit
                 break
+            else:
+                print(f"Incorrect input.")
+                continue
+
     pass
 
 

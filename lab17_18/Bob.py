@@ -4,9 +4,7 @@ import random
 import socket
 import art
 import os
-from myScripts.gost_stribog import gost_256_512
 from myScripts.sha_ import sha_256_512
-from myScripts.my_rsa import RSA
 from myScripts.text_tags import Tag
 
 my_name = "Bob"

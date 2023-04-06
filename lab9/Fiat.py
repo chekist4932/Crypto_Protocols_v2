@@ -23,7 +23,7 @@ class Shamir:
         _p = self.PrimeNum(key_digit, 100)
         _q = self.PrimeNum(key_digit, 100)
         _n = _p * _q
-        _a_values = tuple(random.randint(1, _n - 1) for step in range(size_))
+        _a_values = tuple(random.randint(1, _n - 1) for _ in range(size_))
         _b_values = tuple(pow(self.EucAlg(_n, a)[2], 2, _n) for a in _a_values)
         public_key = {"publicExponent": _b_values, "N": _n}
         secret_key = {'privateExponent': _a_values, 'prime1': _p, 'prime2': _q}

@@ -307,3 +307,7 @@ if __name__ == "__main__":
 # mp = mes.encode("utf-8").hex()
 # print(timeit.timeit(lambda :bin(int(mess.encode("utf-8").hex(),16))[2:].zfill(len(mess)*8),number=1000000))
 # print(timeit.timeit(lambda :hex_to_bin(mess.encode("utf-8").hex()),number=1000000))
+
+# deb865ddc0ba5c c 7e38db5f01ea0670399931874ec47cca931 0 ec1bc2a50a1c6
+# 20f911e5355d2a c b45ac64997f65c09ddfcee9a5f733fd8788 0 a543011f1542f
+

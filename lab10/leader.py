@@ -102,6 +102,7 @@ def open_file() -> bytes:
         else:
             return msg
 
+
 msg = open_file()
 
 print(f"{insertion} Process started.")

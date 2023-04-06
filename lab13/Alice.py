@@ -71,6 +71,7 @@ print(f"{insertion_tag} Answer from: {users}")
 # print(bob_answer)
 try:
     if json.loads(bob_answer.decode()) == rand_num_z:
+        print(f"{insertion_tag} Number: {json.loads(bob_answer.decode())}")
         print(f"{insertion_tag} Authentication passed.")
 except Exception:
     print(f"{insertion_tag} Authentication failed.")

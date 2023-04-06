@@ -1,11 +1,9 @@
 import logging
 import random
-
 import art
 import socket
 import json
 import os
-from myScripts.gost_stribog import gost_256_512
 from myScripts.sha_ import sha_256_512
 from myScripts.my_rsa import prime_num, gen_parent_element
 from myScripts.text_tags import Tag
@@ -24,6 +22,7 @@ json.dump(iteration, open(path_iteration_counter, "w"), indent=4)
 
 
 def welcome():
+    lab_name = os.path.basename(os.getcwd())
     art.tprint(lab_name, font="chiseled")
     print(f"{Tag.blue} Host Id: {user_id}")
     print(f"{Tag.blue} Host Name: {my_name}\n")
