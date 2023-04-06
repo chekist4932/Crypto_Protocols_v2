@@ -1,0 +1,14 @@
+
+kpython:S1542="NRename function "XOR_orig" to match the regular expression ^[a-z_][a-z0-9_]*$.(õ‰ä„øÿÿÿÿ
+apython:S1542E"JRename function "XOR_" to match the regular expression ^[a-z_][a-z0-9_]*$.(ØĞ†#
+vpython:S117S"ZRename this local variable "PS_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.(±¢ÊÛûÿÿÿÿ
+fpython:S1542`"IRename function "LPS" to match the regular expression ^[a-z_][a-z0-9_]*$.(åîÙ‘ıÿÿÿÿ
+jpython:S1542d"MRename function "E_trans" to match the regular expression ^[a-z_][a-z0-9_]*$.(ã™Â›ûÿÿÿÿ
+apython:S1542p"IRename function "g_N" to match the regular expression ^[a-z_][a-z0-9_]*$.(‰œÉ¾
+…python:S101t"iRename class "GOST_34_11_2012" to match the regular expression ^_?([A-Z_][a-zA-Z0-9]*|[a-z_][a-z0-9_]*)$.(¶ÍªÜıÿÿÿÿ
+ppython:S117w"TRename this local variable "Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(Î£âşÿÿÿÿ
+upython:S117‰"XRename this local variable "Len_Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(÷©¿Ëúÿÿÿÿ
+tpython:S117"WRename this local variable "Mp_Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬Î°íûÿÿÿÿ
+tpython:S117–"\Rename this local variable "Zero_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ÿ¡ğ÷
+xpython:S117†"[Rename this local variable "__E_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.( ²‰ûÿÿÿÿ
+rpython:S117…"[Rename this local variable "__N_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.(¥ØÄ\

@@ -1,0 +1,15 @@
+
+4python:S2772"Remove this unneeded "pass".(ã‘Û¾
+4python:S2772*"Remove this unneeded "pass".(ã‘Û¾
+4python:S2772E"Remove this unneeded "pass".(ã‘Û¾
+lpython:S100]"PRename method "PKCS_7_CAdES" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ñµ½†ýÿÿÿÿ
+qpython:S2737†"XAdd logic to this except clause or eliminate it and rethrow the exception automatically.(©¡´Þ
+dpython:S100Ÿ"LRename method "PrimeNum" to match the regular expression ^[a-z_][a-z0-9_]*$.(½ì¼Í
+>python:S1481¬"%Remove the unused local variable "i".(ð¡õÄ
+mpython:S3776Ÿ"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(½ì¼Í
+gpython:S100¸"JRename method "EucAlg" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÃÜÔüûÿÿÿÿ
+Apython:S108º")Either remove or fill this block of code.(ã‘Û¾
+<python:S125Õ"Remove this commented out code.(¦¤àˆûÿÿÿÿ
+7python:S125Ú"Remove this commented out code.(¼Èá…
+<python:S125ã"Remove this commented out code.(Ïë¦þÿÿÿÿ
+<python:S125æ"Remove this commented out code.(±Ù†ùÿÿÿÿ

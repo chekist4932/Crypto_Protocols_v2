@@ -1,0 +1,16 @@
+
+xpython:S117"\Rename this local variable "BASE64_dict" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ñ¸º°ûÿÿÿÿ
+qpython:S117%"ZRename this local variable "MES_array" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÿğ‹å
+kpython:S1542"SRename function "encode_BASE64" to match the regular expression ^[a-z_][a-z0-9_]*$.(¿ƒ³
+@python:S108")Either remove or fill this block of code.(ã‘Û¾
+xpython:S117@"\Rename this local variable "BASE64_dict" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ñ¸º°ûÿÿÿÿ
+qpython:S117P"ZRename this local variable "MES_array" to match the regular expression ^[_a-z][a-z0-9_]*$.(„éöè
+kpython:S1542>"SRename function "decode_BASE64" to match the regular expression ^[a-z_][a-z0-9_]*$.(™àÏÁ
+spython:S117\"\Rename this local variable "BASE32_dict" to match the regular expression ^[_a-z][a-z0-9_]*$.(¤šõ±
+qpython:S117h"ZRename this local variable "MES_array" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÄÂîı
+kpython:S1542["SRename function "encode_BASE32" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ö‹Í
+@python:S108b")Either remove or fill this block of code.(ã‘Û¾
+tpython:S117…"\Rename this local variable "BASE32_dict" to match the regular expression ^[_a-z][a-z0-9_]*$.(¤šõ±
+rpython:S117š"ZRename this local variable "MES_array" to match the regular expression ^[_a-z][a-z0-9_]*$.(„éöè
+qpython:S1542„"SRename function "decode_BASE32" to match the regular expression ^[a-z_][a-z0-9_]*$.(ùÃ‡ëıÿÿÿÿ
+gpython:S1542¤"NRename function "Save_res" to match the regular expression ^[a-z_][a-z0-9_]*$.(ã‡Œ»

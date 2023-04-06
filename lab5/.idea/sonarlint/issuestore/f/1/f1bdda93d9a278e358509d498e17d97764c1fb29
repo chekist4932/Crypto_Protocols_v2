@@ -1,0 +1,24 @@
+
+vpython:S1192Ý"XDefine a constant instead of duplicating this literal "Input error. Try again." 6 times.(ÁþÉæøÿÿÿÿ
+`python:S1542C"HRename function "Ch" to match the regular expression ^[a-z_][a-z0-9_]*$.(œðÄ
+fpython:S1542G"IRename function "Maj" to match the regular expression ^[a-z_][a-z0-9_]*$.(Žžé¡øÿÿÿÿ
+epython:S1542K"MRename function "E_0_256" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÆÏ™Š
+jpython:S1542O"MRename function "E_0_512" to match the regular expression ^[a-z_][a-z0-9_]*$.(¢çÚÿÿÿÿÿ
+jpython:S1542S"MRename function "E_1_256" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÌˆõÃøÿÿÿÿ
+jpython:S1542W"MRename function "E_1_512" to match the regular expression ^[a-z_][a-z0-9_]*$.(Â»ÚÄøÿÿÿÿ
+spython:S117”"VRename this local variable "Temp1" to match the regular expression ^[_a-z][a-z0-9_]*$.(Äåäþÿÿÿÿ
+npython:S117•"VRename this local variable "Temp2" to match the regular expression ^[_a-z][a-z0-9_]*$.(Š’Ïê
+qpython:S117„"TRename this local variable "W_t" to match the regular expression ^[_a-z][a-z0-9_]*$.(§ý¦Äøÿÿÿÿ
+>python:S1481‡"%Remove the unused local variable "j".(Ë¶ÙŠ
+6python:S125|"Remove this commented out code.(þ‹Î
+npython:S117Â"VRename this local variable "Temp1" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ž‘å 
+npython:S117Ã"VRename this local variable "Temp2" to match the regular expression ^[_a-z][a-z0-9_]*$.(ýÀ™
+lpython:S117³"TRename this local variable "W_t" to match the regular expression ^[_a-z][a-z0-9_]*$.(åÆ×™
+>python:S1481µ"%Remove the unused local variable "j".(†¡£å
+lpython:S3776Ø"TRefactor this function to reduce its Cognitive Complexity from 29 to the 15 allowed.(ƒÃ¿u
+rpython:S3776ÿ"TRefactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.(™Âüìûÿÿÿÿ
+7python:S125¢"Remove this commented out code.(‘¯»´
+<python:S125¨"Remove this commented out code.(Àýüïûÿÿÿÿ
+7python:S125ª"Remove this commented out code.(ÅåŒ±
+<python:S125¯"Remove this commented out code.(ƒ—…šúÿÿÿÿ
+7python:S125³"Remove this commented out code.(Îð©®

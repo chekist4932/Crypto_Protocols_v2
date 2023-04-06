@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="488729d4-bc93-47b2-b3c6-dd1816746f3f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../lab10 TimeStampCentre/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../lab10 TimeStampCentre/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10 TimeStampCentre/time_stamp_centre.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../lab10/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-21-09.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-23-10.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-25-41.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-26-51.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-27-25.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-28-04.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-28-58.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-29-15.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-31-13.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-32-04.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-43-46.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-45-07.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-47-59.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-49-44.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-50-29.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab10/results/Signature 22-05-18-20-51-28.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab12/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../lab12/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab13/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../lab13/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab13/Alice.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab13/Alice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab15/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../lab15/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab16/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../lab16/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lab17_18.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lab17_18.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bob.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bob.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myScripts/signature.py" beforeDir="false" afterPath="$PROJECT_DIR$/myScripts/signature.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/my_rsa.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3/my_rsa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7/lab7_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab7/lab7_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab7/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_8_serv/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab7_8_serv/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/lab7_serv.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/GOST_R_34_12_2012.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/keys/rsa_keys/PubKey_.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/keys/rsa_keys/SecKey_.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/my_rsa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab7_serv/sha_256_512.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab8/Elgamal.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab8/Elgamal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab8/results/Signature 22-04-27-15-46-04.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab9/Fiat.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab9/Fiat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab9/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab9/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2A37vQ9Q0dVXA1d35kpVPgjihBb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="Bob" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="lab17_18" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Bob.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="lab17_18" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Bob" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="488729d4-bc93-47b2-b3c6-dd1816746f3f" name="Changes" comment="" />
+      <created>1654226644703</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1654226644703</updated>
+    </task>
+    <servers />
+  </component>
+</project>

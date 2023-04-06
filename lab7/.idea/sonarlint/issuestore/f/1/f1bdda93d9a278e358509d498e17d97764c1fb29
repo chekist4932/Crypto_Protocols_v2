@@ -1,0 +1,8 @@
+
+jpython:S117"SRename this parameter "SetOfAt" to match the regular expression ^[_a-z][a-z0-9_]*$.(¹…®‰
+Ipython:S1172+",Remove the unused function parameter "mode".(ÁÊ‘øÿÿÿÿ
+4python:S27725"Remove this unneeded "pass".(ã‘Û¾
+rpython:S117"ZRename this local variable "SetOfAttr" to match the regular expression ^[_a-z][a-z0-9_]*$.(‰Êâº
+lpython:S37768"TRefactor this function to reduce its Cognitive Complexity from 81 to the 15 allowed.(Ô¾Œå
+5python:S2772¯"Remove this unneeded "pass".(ã‘Û¾
+;python:S125:"Remove this commented out code.(ºµØ‚ûÿÿÿÿ

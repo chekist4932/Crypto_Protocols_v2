@@ -1,5 +1,5 @@
 
-.venv
-.idea
-__pychache__
-venv
+/.venv
+/.idea
+/__pychache__
+/venv

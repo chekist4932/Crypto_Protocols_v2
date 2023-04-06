@@ -1,0 +1,17 @@
+
+upython:S1192"XDefine a constant instead of duplicating this literal "Input error. Try again." 3 times.(ÁşÉæøÿÿÿÿ
+7python:S36266"Remove this redundant continue.(À–¬ˆ
+7python:S36262"Remove this redundant continue.(À–¬ˆ
+7python:S3626"Remove this redundant continue.(À–¬ˆ
+npython:S117
+"WRename this local variable "Layout" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶©Ö’
+ppython:S117"TRename this local variable "Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(òªöÙüÿÿÿÿ
+lpython:S3776"TRefactor this function to reduce its Cognitive Complexity from 24 to the 15 allowed.(¥Í’
+;python:S125"Remove this commented out code.(ƒŞ¥Éùÿÿÿÿ
+upython:S117A"YRename this local variable "E_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.(òÕ–£øÿÿÿÿ
+ipython:S1179"RRename this parameter "Layout" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬ŞŒÿ
+opython:S117G"XRename this local variable "Len_Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(›Û³Ö
+npython:S117`"WRename this local variable "Mp_Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ã‡èÍ
+fpython:S1179"ORename this parameter "Msg" to match the regular expression ^[_a-z][a-z0-9_]*$.(¬ŞŒÿ
+ppython:S117@"YRename this local variable "N_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.(±“¤
+spython:S117S"\Rename this local variable "Zero_vector" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ÿ¡ğ÷

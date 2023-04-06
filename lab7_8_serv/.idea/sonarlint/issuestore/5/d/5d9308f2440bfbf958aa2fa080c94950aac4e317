@@ -1,0 +1,10 @@
+
+Lpython:S1066"/Merge this if statement with the enclosing one.(Â¾“Îÿÿÿÿÿ
+4python:S2772"Remove this unneeded "pass".(ã‘Û¾
+Bpython:S14812"%Remove the unused local variable "i".(¤ÄÄ“øÿÿÿÿ
+qpython:S2737‚"XAdd logic to this except clause or eliminate it and rethrow the exception automatically.(©¡´Þ
+kpython:S100›"NRename method "__PrimeNum" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÈÚ©Ÿúÿÿÿÿ
+>python:S1481¨"%Remove the unused local variable "i".(ð¡õÄ
+rpython:S3776›"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(ÈÚ©Ÿúÿÿÿÿ
+ipython:S100´"LRename method "__EucAlg" to match the regular expression ^[a-z_][a-z0-9_]*$.(ê‡´óùÿÿÿÿ
+Apython:S108¶")Either remove or fill this block of code.(ã‘Û¾
